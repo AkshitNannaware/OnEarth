@@ -1,0 +1,141 @@
+require('dotenv').config();
+console.log('Loaded JWT_SECRET:', process.env.JWT_SECRET);
+const DeletedItem = require('./models/DeletedItem');
+// Scheduled job to permanently delete items from dustbin after 48 hours
+setInterval(async () => {
+  try {
+    const now = new Date();
+    const expiredItems = await DeletedItem.find({ expiresAt: { $lte: now } });
+    for (const item of expiredItems) {
+      // Optionally: log or backup before permanent delete
+      await DeletedItem.deleteOne({ _id: item._id });
+      console.log(`Dustbin: Permanently deleted ${item.itemType} ${item.itemId}`);
+    }
+  } catch (err) {
+    console.error('Dustbin cleanup error:', err);
+  }
+}, 60 * 60 * 1000); // Run every hour
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+dotenv.config();
+mongoose.set('bufferCommands', false);
+
+const authRoutes = require('./routes/auth');
+const roomRoutes = require('./routes/admin/rooms');
+const serviceRoutes = require('./routes/services');
+const adminServiceRoutes = require('./routes/admin/services');
+const offerRoutes = require('./routes/offers');
+const adminOfferRoutes = require('./routes/admin/offers');
+const bookingRoutes = require('./routes/bookings');
+const adminBookingRoutes = require('./routes/admin/bookings');
+const serviceBookingRouter = require('./routes/serviceBookings');
+const contactRoutes = require('./routes/contact');
+const adminRoutes = require('./routes/admin/admin');
+const adminContactRoutes = require('./routes/admin/contacts');
+const adminServiceBookingRoutes = require('./routes/admin/serviceBookings');
+const paymentRoutes = require('./routes/payments');
+const newsletterRoutes = require('./routes/newsletter');
+const adminNewsletterRoutes = require('./routes/admin/newsletters');
+const notificationRoutes = require('./routes/notifications');
+const blogsRoutes = require('./routes/blogs');
+
+const User = require('./models/User');
+const Room = require('./models/Room');
+const brandingRoutes = require('./routes/branding');
+
+const app = express();
+const PORT = process.env.PORT || 5000; 
+const MONGO_URI = process.env.MONGO_URI;
+
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://hotel-frontend-orcin.vercel.app'
+  ],
+  credentials: true,
+}));
+app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const durationMs = Date.now() - start;
+    console.log(`${req.method} ${req.originalUrl} ${res.statusCode} ${durationMs}ms`);
+  });
+  next();
+});
+
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Hotel backend running' });
+});
+
+app.use('/api/auth', authRoutes);
+app.use('/api/branding', brandingRoutes);
+app.use('/api/rooms', roomRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/offers', offerRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/admin/bookings', adminBookingRoutes);
+app.use('/api/service-bookings', serviceBookingRouter);
+app.use('/api/contact', contactRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/admin/services', adminServiceRoutes);
+app.use('/api/admin/offers', adminOfferRoutes);
+app.use('/api/admin/contacts', adminContactRoutes);
+app.use('/api/admin/service-bookings', adminServiceBookingRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/admin/newsletters', adminNewsletterRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/blogs', blogsRoutes);
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status || 500).json({
+    message: err.message || 'Internal Server Error',
+  });
+});
+
+async function startServer() {
+  if (!MONGO_URI) {
+    console.error('MONGO_URI is not set');
+    process.exit(1);
+  }
+
+  try {
+    await mongoose.connect(MONGO_URI);
+    console.log('MongoDB connected');
+
+    // Migration: add `location` field to rooms that don't have it yet
+    try {
+      const result = await Room.updateMany(
+        { location: { $exists: false } },
+        { $set: { location: '' } }
+      );
+      if (result.modifiedCount > 0) {
+        console.log(`Migration: added location field to ${result.modifiedCount} existing room(s)`);
+      }
+    } catch (err) {
+      console.warn('Migration warning (location field):', err.message);
+    }
+  } catch (err) {
+    console.error('MongoDB connection failed.', err);
+    process.exit(1);
+  }
+
+  app.listen(PORT, () => {
+    console.log(`Hotel backend listening on port ${PORT}`);
+  });
+}
+
+
+
+startServer().catch((err) => {
+  console.error('Failed to start server', err);
+  process.exit(1);
+});

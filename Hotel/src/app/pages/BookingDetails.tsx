@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { ArrowLeft, Calendar, Clock, User, Mail, Phone, CreditCard, CheckCircle, XCircle, DollarSign, MapPin, Hotel, FileText } from 'lucide-react';
@@ -12,7 +13,6 @@ const BookingDetails = () => {
   const navigate = useNavigate();
   const { bookings, cancelBooking } = useBooking();
   const booking = bookings.find(b => b.id === bookingId);
-  import API_BASE from '../../config/api';
   const [room, setRoom] = useState<Room | null>(null);
   const [roomLoadError, setRoomLoadError] = useState<string | null>(null);
 

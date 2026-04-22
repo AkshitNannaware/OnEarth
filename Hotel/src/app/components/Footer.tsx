@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React from 'react';
 import { Link } from 'react-router';
 import { Facebook, Instagram, MessageCircle, Twitter, Linkedin, Youtube } from 'lucide-react';

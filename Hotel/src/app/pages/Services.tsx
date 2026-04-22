@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router';
 import { Clock } from 'lucide-react';
@@ -19,7 +20,6 @@ const Services = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
-  import API_BASE from '../../config/api';
 
   const categories = {
     restaurant: 'Bite Book (Restaurant)',

@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface User {
@@ -25,8 +26,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
-
-  import API_BASE from '../../config/api';
 
   useEffect(() => {
     const stored = localStorage.getItem('auth');

@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { User, Mail, Phone, Calendar, LogOut, Settings, Bell, CreditCard, Edit2, Save, X, AlertCircle, CheckCircle2, Award, Star, TrendingUp, MapPin, Gift, Shield, Menu, Download } from 'lucide-react';
@@ -62,7 +63,6 @@ const Profile = () => {
   const resolveTab = (value: string | null) => (value && allowedTabs.includes(value) ? value : 'profile');
   const [activeTab, setActiveTab] = React.useState(() => resolveTab(searchParams.get('tab')));
   const [isMobileNavOpen, setIsMobileNavOpen] = React.useState(false);
-  import API_BASE from '../../config/api';
   
   const resolveImageUrl = (imageUrl: string) => {
     if (!imageUrl) return 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400';

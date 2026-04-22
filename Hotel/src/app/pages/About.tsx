@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { Plus, X } from 'lucide-react';
@@ -10,7 +11,6 @@ const About = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
-  import API_BASE from '../../config/api';
 
   const faqs = [
     {

@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useState } from 'react';
 import { Mail, ArrowLeft, Lock, KeyRound, Eye, EyeOff } from 'lucide-react';
 import { Button } from '../components/ui/button';
@@ -33,7 +34,6 @@ const ForgotPassword = () => {
   const [passwordError, setPasswordError] = useState('');
   const [confirmError, setConfirmError] = useState('');
   const [isSending, setIsSending] = useState(false);
-  import API_BASE from '../../config/api';
 
   const requestOtp = async () => {
     if (!identifier.trim()) {

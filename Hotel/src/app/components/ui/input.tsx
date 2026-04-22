@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import * as React from "react";
 
 import { cn } from "./utils";

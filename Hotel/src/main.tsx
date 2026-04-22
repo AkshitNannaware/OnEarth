@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 
   import { createRoot } from "react-dom/client";
   import App from "./app/App.tsx";

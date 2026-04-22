@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+ import API_BASE from '../../config/api';
 
 export interface Notification {
   _id: string;
@@ -10,8 +11,6 @@ export interface Notification {
   read: boolean;
   role: 'user' | 'admin' | 'all';
 }
-
-const API_URL = ;
 
 function getToken(): string | null {
   try {

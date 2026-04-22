@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { Calendar, Clock, Upload, CheckCircle, X } from 'lucide-react';
@@ -16,7 +17,6 @@ const CheckIn = () => {
   const { bookings, bookingsLoading, updateBookingStatus, submitIdProof, refreshBookings } = useBooking();
   const { isAdmin } = useAuth();
   const booking = bookings.find(b => b.id === bookingId);
-  import API_BASE from '../../config/api';
   const [room, setRoom] = useState<Room | null>(null);
   const [roomLoadError, setRoomLoadError] = useState<string | null>(null);
 

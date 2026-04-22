@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { User, Mail, Phone, CreditCard, CheckCircle2, X } from 'lucide-react';
@@ -17,7 +18,6 @@ const Booking = () => {
   const [adminBooking, setAdminBooking] = useState(null);
   const [loadingAdminBooking, setLoadingAdminBooking] = useState(false);
   const [adminBookingError, setAdminBookingError] = useState(null);
-  import API_BASE from '../../config/api';
   const bookingIdFromUrl = window.location.pathname.split('/').pop();
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');

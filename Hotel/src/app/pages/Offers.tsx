@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import { ArrowRight, Star } from 'lucide-react';
@@ -20,7 +21,6 @@ type Offer = {
 };
 
 const Offers = () => {
-  import API_BASE from '../../config/api';
   const [offers, setOffers] = useState<Offer[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);

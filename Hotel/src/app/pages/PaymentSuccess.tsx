@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router';
 import { CheckCircle, Download, Home, Clock, X } from 'lucide-react';
@@ -18,7 +19,6 @@ const PaymentSuccess = () => {
   const [booking, setBooking] = React.useState<any | null>(
     bookings.find(b => b.id === bookingId) || null
   );
-  import API_BASE from '../../config/api';
   const [room, setRoom] = React.useState<Room | null>(null);
   const [roomLoadError, setRoomLoadError] = React.useState<string | null>(null);
   

@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send, BedDouble, Utensils, ArrowRight, X } from 'lucide-react';
 import { Link } from 'react-router';
@@ -26,7 +27,6 @@ type Service = {
 };
 
 const Contact = () => {
-  import API_BASE from '../../config/api';
   const [isSending, setIsSending] = useState(false);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [services, setServices] = useState<Service[]>([]);

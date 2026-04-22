@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { Calendar, Clock, Users, CheckCircle, X } from 'lucide-react';
@@ -27,8 +28,7 @@ const ServiceBooking = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [bookingId, setBookingId] = useState<string | null>(null);
-  import API_BASE from '../../config/api';
-
+  
   const resolveImageUrl = (imageUrl: string) => {
     if (!imageUrl) return '';
     const trimmed = imageUrl.trim();

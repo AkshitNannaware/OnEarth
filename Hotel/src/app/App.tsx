@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import { RouterProvider } from 'react-router';
 import { router } from './routes';
 import { AuthProvider } from './context/AuthContext';

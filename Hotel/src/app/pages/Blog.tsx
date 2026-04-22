@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useState } from 'react';
 import { BookOpen, Calendar, User } from 'lucide-react';
 import Footer from '../components/Footer';
@@ -13,7 +14,6 @@ type BlogPost = {
   date?: string;
 };
 
-import API_BASE from '../../config/api';
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);

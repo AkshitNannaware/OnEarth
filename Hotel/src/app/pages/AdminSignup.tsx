@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Eye, EyeOff } from 'lucide-react';
@@ -18,7 +19,6 @@ const getPasswordStrength = (password: string): { score: number; label: string; 
   return { score, label: 'Strong', color: '#22c55e' };
 };
 
-import API_BASE from '../../config/api';
 
 const AdminSignup = () => {
   const [showPassword, setShowPassword] = useState(false);

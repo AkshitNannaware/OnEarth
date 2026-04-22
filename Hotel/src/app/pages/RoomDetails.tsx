@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router';
 import { Calendar, X, Users, Maximize2, Wifi, Car, Coffee, Waves, MapPin } from 'lucide-react';
@@ -15,8 +16,7 @@ const RoomDetails = () => {
   const location = useLocation();
   
   // Define API_BASE outside or memoize it to prevent re-render triggers
-  import API_BASE from '../../config/api';
-
+  
   const [room, setRoom] = useState<Room | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);

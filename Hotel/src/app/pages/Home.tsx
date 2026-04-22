@@ -10,28 +10,6 @@ import type { Room } from '../types/room';
 const ctaImage = '/0c0b1b9fcebeedd073f75517ee322f51.jpg';
 
 const Home = () => {
-  const [destination, setDestination] = useState('');
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [guests, setGuests] = useState('2');
-  const [rooms, setRooms] = useState('1');
-  const [showHomeAboutMore, setShowHomeAboutMore] = useState(false);
-  const discoverRef = useRef<HTMLDivElement | null>(null);
-  const [accommodationIndex, setAccommodationIndex] = useState(0);
-  const [roomsState, setRoomsState] = useState<Room[]>([]);
-  const [accommodationLocationSearch, setAccommodationLocationSearch] = useState('');
-  const [roomsLoading, setRoomsLoading] = useState(false);
-  const [roomsError, setRoomsError] = useState<string | null>(null);
-  const [servicesState, setServicesState] = useState<any[]>([]);
-  const [servicesLoading, setServicesLoading] = useState(false);
-  const [servicesError, setServicesError] = useState<string | null>(null);
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [isSubscribing, setIsSubscribing] = useState(false);
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
-  
-  const heroImage = '/15101348_3840_2160_60fps.mp4';
-  const fallbackRoomImage = 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1400';
-  import API_BASE from '../../config/api';
 	const [destination, setDestination] = useState('');
 	const [checkIn, setCheckIn] = useState('');
 	const [checkOut, setCheckOut] = useState('');

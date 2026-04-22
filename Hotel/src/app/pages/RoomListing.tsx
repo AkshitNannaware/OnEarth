@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import {
@@ -31,7 +32,6 @@ const PRICE_MAX = 5000;
 const FALLBACK_ROOM_IMAGE = 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&h=400&fit=crop';
 
 const RoomListing = () => {
-  import API_BASE from '../../config/api';
 
   const [priceRange, setPriceRange] = useState([0, PRICE_MAX]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);

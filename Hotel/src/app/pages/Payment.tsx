@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router';
 import { X, Lock, CreditCard } from 'lucide-react';
@@ -14,7 +15,6 @@ declare global {
 }
 
 const Payment = () => {
-  import API_BASE from '../../config/api';
   const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID as string | undefined;
   const { bookingId, serviceBookingId } = useParams();
   const navigate = useNavigate();

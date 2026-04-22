@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, BedDouble, ConciergeBell, Info, CalendarCheck, ClipboardList, DollarSign, LucideProps } from 'lucide-react';

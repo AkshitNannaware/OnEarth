@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 const updateBookingStatus = async (
   bookingId: string,
   status: string,
@@ -191,7 +192,6 @@ type AdminBlog = {
   createdAt?: string | Date;
 };
 
-import API_BASE from '../../config/api';
 
 import { useLocation } from 'react-router';
 

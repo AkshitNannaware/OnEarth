@@ -1,3 +1,4 @@
+import API_BASE from "../../config/api";
 "use client";
 
 import { useTheme } from "next-themes";

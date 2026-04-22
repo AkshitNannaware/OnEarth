@@ -16,7 +16,7 @@ const CheckIn = () => {
   const { bookings, bookingsLoading, updateBookingStatus, submitIdProof, refreshBookings } = useBooking();
   const { isAdmin } = useAuth();
   const booking = bookings.find(b => b.id === bookingId);
-  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
   const [room, setRoom] = useState<Room | null>(null);
   const [roomLoadError, setRoomLoadError] = useState<string | null>(null);
 

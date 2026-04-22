@@ -18,7 +18,7 @@ const PaymentSuccess = () => {
   const [booking, setBooking] = React.useState<any | null>(
     bookings.find(b => b.id === bookingId) || null
   );
-  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
   const [room, setRoom] = React.useState<Room | null>(null);
   const [roomLoadError, setRoomLoadError] = React.useState<string | null>(null);
   

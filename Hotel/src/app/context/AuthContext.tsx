@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  const API_BASE = (import.meta.env.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
 
   useEffect(() => {
     const stored = localStorage.getItem('auth');

@@ -20,7 +20,7 @@ type Offer = {
 };
 
 const Offers = () => {
-  const API_BASE = (import.meta.env?.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
   const [offers, setOffers] = useState<Offer[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);

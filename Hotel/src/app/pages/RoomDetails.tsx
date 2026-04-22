@@ -15,7 +15,7 @@ const RoomDetails = () => {
   const location = useLocation();
   
   // Define API_BASE outside or memoize it to prevent re-render triggers
-  const API_BASE = (import.meta.env?.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
 
   const [room, setRoom] = useState<Room | null>(null);
   const [isLoading, setIsLoading] = useState(false);

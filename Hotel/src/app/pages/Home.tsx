@@ -31,7 +31,7 @@ const Home = () => {
   
   const heroImage = '/15101348_3840_2160_60fps.mp4';
   const fallbackRoomImage = 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1400';
-  const API_BASE = (import.meta.env?.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
 
   useEffect(() => {
     const loadRooms = async () => {

@@ -33,7 +33,7 @@ const ForgotPassword = () => {
   const [passwordError, setPasswordError] = useState('');
   const [confirmError, setConfirmError] = useState('');
   const [isSending, setIsSending] = useState(false);
-  const API_BASE = (import.meta.env.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
 
   const requestOtp = async () => {
     if (!identifier.trim()) {

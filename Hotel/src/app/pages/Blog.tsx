@@ -13,7 +13,7 @@ type BlogPost = {
   date?: string;
 };
 
-const API_BASE = (import.meta.env?.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+import API_BASE from '../../config/api';
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);

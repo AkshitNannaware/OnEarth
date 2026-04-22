@@ -18,7 +18,7 @@ const getPasswordStrength = (password: string): { score: number; label: string; 
   return { score, label: 'Strong', color: '#22c55e' };
 };
 
-const API_BASE = (import.meta.env?.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+import API_BASE from '../../config/api';
 
 const AdminSignup = () => {
   const [showPassword, setShowPassword] = useState(false);

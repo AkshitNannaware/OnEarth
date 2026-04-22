@@ -62,7 +62,7 @@ const Profile = () => {
   const resolveTab = (value: string | null) => (value && allowedTabs.includes(value) ? value : 'profile');
   const [activeTab, setActiveTab] = React.useState(() => resolveTab(searchParams.get('tab')));
   const [isMobileNavOpen, setIsMobileNavOpen] = React.useState(false);
-  const API_BASE = (import.meta.env?.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
   
   const resolveImageUrl = (imageUrl: string) => {
     if (!imageUrl) return 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400';

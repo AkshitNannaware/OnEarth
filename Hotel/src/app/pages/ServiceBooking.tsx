@@ -27,7 +27,7 @@ const ServiceBooking = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [bookingId, setBookingId] = useState<string | null>(null);
-  const API_BASE = (import.meta.env.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
 
   const resolveImageUrl = (imageUrl: string) => {
     if (!imageUrl) return '';

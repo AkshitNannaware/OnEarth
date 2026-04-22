@@ -14,7 +14,7 @@ declare global {
 }
 
 const Payment = () => {
-  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
   const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID as string | undefined;
   const { bookingId, serviceBookingId } = useParams();
   const navigate = useNavigate();

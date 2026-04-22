@@ -53,7 +53,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
   const [currentBooking, setCurrentBooking] = useState<BookingDetails | null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [bookingsLoading, setBookingsLoading] = useState(true);
-  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
 
   const getAuthToken = () => {
     const stored = localStorage.getItem('auth');

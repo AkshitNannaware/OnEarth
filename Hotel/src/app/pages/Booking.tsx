@@ -17,7 +17,7 @@ const Booking = () => {
   const [adminBooking, setAdminBooking] = useState(null);
   const [loadingAdminBooking, setLoadingAdminBooking] = useState(false);
   const [adminBookingError, setAdminBookingError] = useState(null);
-  const API_BASE = (import.meta.env.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
   const bookingIdFromUrl = window.location.pathname.split('/').pop();
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');

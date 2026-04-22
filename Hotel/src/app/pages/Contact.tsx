@@ -26,7 +26,7 @@ type Service = {
 };
 
 const Contact = () => {
-  const API_BASE = (import.meta.env?.VITE_API_URL as string | undefined) || 'http://localhost:5000';
+  import API_BASE from '../../config/api';
   const [isSending, setIsSending] = useState(false);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [services, setServices] = useState<Service[]>([]);

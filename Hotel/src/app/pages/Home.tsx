@@ -6,6 +6,7 @@ import { Input } from '../components/ui/input';
 import Footer from '../components/Footer';
 import { toast } from 'sonner';
 import type { Room } from '../types/room';
+import API_BASE from "../../config/api";
 
 const ctaImage = '/0c0b1b9fcebeedd073f75517ee322f51.jpg';
 
@@ -291,6 +292,11 @@ const Home = () => {
 			handleSearch();
 		}
 	};
+
+	// Get restaurant services
+	const restaurantServices = servicesState.filter(
+		(service) => service.category === 'restaurant' || service.category === 'dining'
+	);
 
 	return (
 		<div className="bg-[#3f4a40]">
@@ -743,8 +749,7 @@ const Home = () => {
 										autoPlay
 										muted
 										loop
-										playsInline
-										poster={resolveRoomImage(nextAccommodation) || undefined}
+										playsInline										poster={resolveRoomImage(nextAccommodation) || undefined}
 									/>
 								) : (
 									<img
@@ -787,8 +792,7 @@ const Home = () => {
 				</div>
 			</section>
 
-
-			{/* Restaurant */}
+			{/* Restaurant - Mobile Swipeable Section */}
 			<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
 				<div className="text-center mb-10">
 					<div className="flex items-center justify-center gap-3 text-xs tracking-[0.35em] uppercase text-[#efece6]">
@@ -812,85 +816,151 @@ const Home = () => {
 					</div>
 				)}
 
-				{(() => {
-					const restaurantServices = servicesState.filter((service) => service.category === 'restaurant' || service.category === 'dining');
+				{restaurantServices.length === 0 && !servicesLoading ? (
+					<div className="rounded-3xl border border-stone-200 bg-white p-8 text-center text-[#efece6]">
+						No restaurants are available yet. Please check back soon.
+					</div>
+				) : (
+					<>
+						{/* Desktop Grid */}
+						<div className="hidden sm:grid grid-cols-1 md:grid-cols-3 gap-6">
+							{restaurantServices.map((restaurant, idx) => (
+								<div key={restaurant._id || restaurant.id || idx} className="group relative">
+									<div className="relative rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+										{resolveServiceVideo(restaurant) ? (
+											<video
+												src={resolveServiceVideo(restaurant)}
+												className="h-[260px] sm:h-[320px] md:h-[380px] w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+												autoPlay
+												muted
+												loop
+												playsInline
+												poster={resolveServiceImage(restaurant) || undefined}
+											/>
+										) : (
+											<img
+												src={resolveServiceImage(restaurant)}
+												alt={restaurant.name}
+												className="h-[260px] sm:h-[320px] md:h-[380px] w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+											/>
+										)}
+										<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
-					if (restaurantServices.length === 0 && !servicesLoading) {
-						return (
-							<div className="rounded-3xl border border-stone-200 bg-white p-8 text-center text-[#efece6]">
-								No restaurants are available yet. Please check back soon.
-							</div>
-						);
-					}
+										{/* Badge */}
+										<div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center font-serif text-xl shadow-lg">
+											{idx + 1}
+										</div>
 
-					return (
-						<>
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-								{restaurantServices.map((restaurant, idx) => (
-									<div key={restaurant._id || restaurant.id || idx} className="group relative">
-										<div className="relative rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-											{resolveServiceVideo(restaurant) ? (
-												<video
-													src={resolveServiceVideo(restaurant)}
-													className="h-[260px] sm:h-[320px] md:h-[380px] w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-													autoPlay
-													muted
-													loop
-													playsInline
-													poster={resolveServiceImage(restaurant) || undefined}
-												/>
-											) : (
-												<img
-													src={resolveServiceImage(restaurant)}
-													alt={restaurant.name}
-													className="h-[260px] sm:h-[320px] md:h-[380px] w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-												/>
+										{/* Content */}
+										<div className="absolute bottom-6 left-6 right-6 text-white">
+											<div className="text-[10px] tracking-[0.3em] uppercase text-amber-200 mb-2">
+												{idx === 0 ? 'Signature' : idx === 1 ? 'Premium' : 'Exclusive'}
+											</div>
+											<h3 className="text-xl md:text-2xl font-serif mb-2">
+												{restaurant.name}
+											</h3>
+											{restaurant.description && (
+												<p className="text-xs text-stone-300 mb-2 line-clamp-2">
+													{restaurant.description}
+												</p>
 											)}
-											<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-
-											{/* Badge */}
-											<div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center font-serif text-xl shadow-lg">
-												{idx + 1}
-											</div>
-
-											{/* Content */}
-											<div className="absolute bottom-6 left-6 right-6 text-white">
-												<div className="text-[10px] tracking-[0.3em] uppercase text-amber-200 mb-2">
-													{idx === 0 ? 'Signature' : idx === 1 ? 'Premium' : 'Exclusive'}
-												</div>
-												<h3 className="text-xl md:text-2xl font-serif mb-2">
-													{restaurant.name}
-												</h3>
-												{restaurant.description && (
-													<p className="text-xs text-stone-300 mb-2 line-clamp-2">
-														{restaurant.description}
-													</p>
-												)}
-												<Link
-													to="/services#services-restaurant"
-													className="text-xs text-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-												>
-													Explore menu →
-												</Link>
-											</div>
+											<Link
+												to="/services#services-restaurant"
+												className="text-xs text-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+											>
+												Explore menu →
+											</Link>
 										</div>
 									</div>
-								))}
+								</div>
+							))}
+						</div>
+
+						{/* Mobile Swipeable Carousel for Restaurants */}
+						<div className="sm:hidden relative">
+							<div className="overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4 -mx-2 px-1">
+								<div className="flex gap-4 w-max">
+									{restaurantServices.map((restaurant, idx) => (
+										<div
+											key={restaurant._id || restaurant.id || idx}
+											className="snap-start w-[85vw] max-w-[320px] flex-shrink-0"
+										>
+											<div className="group relative rounded-[24px] overflow-hidden shadow-lg">
+												{resolveServiceVideo(restaurant) ? (
+													<video
+														src={resolveServiceVideo(restaurant)}
+														className="h-[280px] w-full object-cover"
+														autoPlay
+														muted
+														loop
+														playsInline
+														poster={resolveServiceImage(restaurant) || undefined}
+													/>
+												) : (
+													<img
+														src={resolveServiceImage(restaurant)}
+														alt={restaurant.name}
+														className="h-[280px] w-full object-cover"
+													/>
+												)}
+												<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+												{/* Badge */}
+												<div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-serif text-lg shadow-lg">
+													{idx + 1}
+												</div>
+
+												{/* Content */}
+												<div className="absolute bottom-6 left-6 right-6 text-white">
+													<div className="text-[10px] tracking-[0.3em] uppercase text-amber-200 mb-2">
+														{idx === 0 ? 'Signature' : idx === 1 ? 'Premium' : 'Exclusive'}
+													</div>
+													<h3 className="text-xl font-serif mb-2">
+														{restaurant.name}
+													</h3>
+													{restaurant.description && (
+														<p className="text-xs text-stone-300 mb-3 line-clamp-2">
+															{restaurant.description}
+														</p>
+													)}
+													<Link
+														to="/services#services-restaurant"
+														className="inline-block rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wide bg-amber-500 text-stone-900 hover:bg-amber-400 transition-colors"
+													>
+														Explore Menu
+													</Link>
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
 							</div>
 
-							<div className="mt-8 text-center">
-								<p className="text-[#efece6] max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
-									Experience culinary artistry where every dish tells a story, blending tradition with innovation in an atmosphere of refined elegance.
-								</p>
-								<Link to="/services">
-									<Button className="mt-6 rounded-full px-8 h-12 text-xs tracking-[0.2em] uppercase bg-amber-500 text-stone-900 hover:bg-amber-400">
-										Explore our Restaurants...
-									</Button>
-								</Link>
-							</div>
-						</>
-					);
-				})()}
+							{/* Scroll Indicator Dots */}
+							{restaurantServices.length > 1 && (
+								<div className="flex justify-center gap-1.5 mt-4">
+									{restaurantServices.map((_, idx) => (
+										<div
+											key={idx}
+											className="h-1.5 w-1.5 rounded-full bg-[#c9c3b6]/50"
+										/>
+									))}
+								</div>
+							)}
+						</div>
+
+						<div className="mt-8 text-center">
+							<p className="text-[#efece6] max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
+								Experience culinary artistry where every dish tells a story, blending tradition with innovation in an atmosphere of refined elegance.
+							</p>
+							<Link to="/services">
+								<Button className="mt-6 rounded-full px-8 h-12 text-xs tracking-[0.2em] uppercase bg-amber-500 text-stone-900 hover:bg-amber-400">
+									Explore our Restaurants...
+								</Button>
+							</Link>
+						</div>
+					</>
+				)}
 			</section>
 
 			{/* About Section */}

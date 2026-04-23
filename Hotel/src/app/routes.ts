@@ -50,7 +50,6 @@ export const router = createBrowserRouter([
       { path: 'blog', Component: Blog },
       // Admin routes as children of Layout
       { path: 'admin', Component: AdminDashboard },
-      { path: 'admin-signup', Component: AdminSignup },
       { path: 'notifications', Component: Notifications },
     ],
   },
@@ -61,6 +60,10 @@ export const router = createBrowserRouter([
   {
     path: '/signup',
     Component: Signup,
+  },
+  {
+    path: '/admin-signup',
+    Component: AdminSignup,
   },
   {
     path: '/forgot-password',

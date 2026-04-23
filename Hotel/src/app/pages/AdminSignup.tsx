@@ -143,9 +143,9 @@ const AdminSignup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#3f4a40] text-[#efece6] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#3f4a40] text-[#efece6]">
       <div className="w-full max-w-lg bg-[#232b23]/95 rounded-3xl shadow-2xl p-12 border border-[#5b6659]">
-        <h1 className="text-3xl font-bold text-center mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>Admin Signup</h1>
+        <h1 className="text-3xl font-bold text-center mb-0" style={{ fontFamily: 'Playfair Display, serif' }}>Admin Signup</h1>
         <p className="text-center text-[#cfc9bb] mb-8 text-lg">
           Create an admin account with your invite code
         </p>

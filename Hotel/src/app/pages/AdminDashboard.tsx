@@ -351,7 +351,7 @@ const AdminDashboard = () => {
 
   const fetchBlogs = async () => {
     try {
-      const blogsData = await fetchJson('/api/admin/blogs');
+      const blogsData = await fetchJson('/admin/blogs');
       setBlogsState(
         (blogsData as any[]).map((blog) => ({
           id: blog._id || blog.id,
@@ -370,7 +370,7 @@ const AdminDashboard = () => {
 
   const createBlogPost = async (blogData: FormData) => {
     try {
-      const newBlog = await fetchJson('/api/admin/blogs', {
+      const newBlog = await fetchJson('/admin/blogs', {
         method: 'POST',
         body: blogData,
         isFormData: true,
@@ -393,7 +393,7 @@ const AdminDashboard = () => {
 
   const updateBlogPost = async (blogId: string, blogData: FormData) => {
     try {
-      const updatedBlog = await fetchJson(`/api/admin/blogs/${blogId}`, {
+      const updatedBlog = await fetchJson(`/admin/blogs/${blogId}`, {
         method: 'PUT',
         body: blogData,
         isFormData: true,
@@ -420,7 +420,7 @@ const AdminDashboard = () => {
   const deleteBlogPost = async (blogId: string) => {
     if (!confirm('Are you sure you want to delete this blog post?')) return;
     try {
-      await fetchJson(`/api/admin/blogs/${blogId}`, {
+      await fetchJson(`/admin/blogs/${blogId}`, {
         method: 'DELETE',
       });
       setBlogsState((prev) => prev.filter((blog) => blog.id !== blogId));
@@ -821,14 +821,14 @@ const AdminDashboard = () => {
 
   const updateIdVerification = async (bookingId: string, idVerified: 'pending' | 'approved' | 'rejected') => {
     try {
-      const updated = await fetchJson(`/api/admin/bookings/${bookingId}/id-verified`, {
+      const updated = await fetchJson(`/admin/bookings/${bookingId}/id-verified`, {
         method: 'PATCH',
         body: JSON.stringify({ idVerified }),
       });
 
       // Backend automatically confirms booking when ID is approved
       // Always fetch latest bookings from backend to ensure we have the correct status
-      const bookings = await fetchJson('/api/admin/bookings');
+      const bookings = await fetchJson('/admin/bookings');
       setBookingsState(
         (bookings as any[]).map((booking) => ({
           id: booking._id || booking.id,
@@ -883,7 +883,7 @@ const AdminDashboard = () => {
 
   const updateContactStatus = async (contactId: string, status: 'new' | 'read' | 'replied' | 'archived') => {
     try {
-      const updated = await fetchJson(`/api/admin/contacts/${contactId}`, {
+      const updated = await fetchJson(`/admin/contacts/${contactId}`, {
         method: 'PATCH',
         body: JSON.stringify({ status }),
       });
@@ -921,7 +921,7 @@ const AdminDashboard = () => {
     }
 
     try {
-      await fetchJson(`/api/admin/contacts/${contactId}`, {
+      await fetchJson(`/admin/contacts/${contactId}`, {
         method: 'DELETE',
       });
 
@@ -969,15 +969,15 @@ const AdminDashboard = () => {
           offersData,
           newslettersData,
         ] = await Promise.all([
-          fetchJson('/api/admin/stats'),
-          fetchJson('/api/admin/rooms'),
-          fetchJson('/api/admin/bookings'),
-          fetchJson('/api/admin/users'),
-          fetchJson('/api/admin/contacts'),
-          fetchJson('/api/admin/services'),
-          fetchJson('/api/admin/service-bookings'),
-          fetchJson('/api/admin/offers'),
-          fetchJson('/api/admin/newsletters'),
+          fetchJson('/admin/stats'),
+          fetchJson('/admin/rooms'),
+          fetchJson('/admin/bookings'),
+          fetchJson('/admin/users'),
+          fetchJson('/admin/contacts'),
+          fetchJson('/admin/services'),
+          fetchJson('/admin/service-bookings'),
+          fetchJson('/admin/offers'),
+          fetchJson('/admin/newsletters'),
         ]);
 
         setStatsState(statsData as AdminStats);
@@ -1034,9 +1034,9 @@ const AdminDashboard = () => {
     setPaymentsRefreshing(true);
     try {
       const [bookingsData, serviceBookingsData, usersData] = await Promise.all([
-        fetchJson('/api/admin/bookings'),
-        fetchJson('/api/admin/service-bookings'),
-        fetchJson('/api/admin/users'),
+        fetchJson('/admin/bookings'),
+        fetchJson('/admin/service-bookings'),
+        fetchJson('/admin/users'),
       ]);
       setBookingsState(
         (bookingsData as any[]).map((booking) => ({
@@ -1349,7 +1349,7 @@ const AdminDashboard = () => {
     if (!roomToDelete) return;
     setRoomDeleteLoading(true);
     try {
-      await fetchJson(`/api/admin/rooms/${roomToDelete}`, { method: 'DELETE' });
+      await fetchJson(`/admin/rooms/${roomToDelete}`, { method: 'DELETE' });
       setRoomsState((prev) => prev.filter((room) => room.id !== roomToDelete));
       if (editingRoomId === roomToDelete) {
         setEditingRoomId(null);
@@ -1398,13 +1398,13 @@ const AdminDashboard = () => {
       let updatedRoom: any;
 
       if (editingRoomId) {
-        updatedRoom = await fetchJson(`/api/admin/rooms/${editingRoomId}`, {
+        updatedRoom = await fetchJson(`/admin/rooms/${editingRoomId}`, {
           method: 'PUT',
           body: JSON.stringify(roomPayload),
         });
         roomId = editingRoomId;
       } else {
-        updatedRoom = await fetchJson('/api/admin/rooms', {
+        updatedRoom = await fetchJson('/admin/rooms', {
           method: 'POST',
           body: JSON.stringify(roomPayload),
         });
@@ -1423,7 +1423,7 @@ const AdminDashboard = () => {
             formData.append('images', file);
           });
 
-          const uploadResponse = await fetchJson(`/api/admin/rooms/${roomId}/upload-images`, {
+          const uploadResponse = await fetchJson(`/admin/rooms/${roomId}/upload-images`, {
             method: 'POST',
             body: formData,
             isFormData: true,
@@ -1441,7 +1441,7 @@ const AdminDashboard = () => {
         try {
           const formData = new FormData();
           formData.append('video', roomVideoFile);
-          const uploadResponse = await fetchJson(`/api/admin/rooms/${roomId}/upload-video`, {
+          const uploadResponse = await fetchJson(`/admin/rooms/${roomId}/upload-video`, {
             method: 'POST',
             body: formData,
             isFormData: true,
@@ -1516,7 +1516,7 @@ const AdminDashboard = () => {
     if (!serviceToDelete) return;
     setServiceDeleteLoading(true);
     try {
-      await fetchJson(`/api/admin/services/${serviceToDelete}`, { method: 'DELETE' });
+      await fetchJson(`/admin/services/${serviceToDelete}`, { method: 'DELETE' });
       setServicesState((prev) => prev.filter((service) => service.id !== serviceToDelete));
       if (editingServiceId === serviceToDelete) {
         setEditingServiceId(null);
@@ -1555,13 +1555,13 @@ const AdminDashboard = () => {
       let updatedService: any;
 
       if (editingServiceId) {
-        updatedService = await fetchJson(`/api/admin/services/${editingServiceId}`, {
+        updatedService = await fetchJson(`/admin/services/${editingServiceId}`, {
           method: 'PUT',
           body: JSON.stringify(payload),
         });
         serviceId = editingServiceId;
       } else {
-        updatedService = await fetchJson('/api/admin/services', {
+        updatedService = await fetchJson('/admin/services', {
           method: 'POST',
           body: JSON.stringify(payload),
         });
@@ -1572,7 +1572,7 @@ const AdminDashboard = () => {
         try {
           const formData = new FormData();
           formData.append('image', serviceImageFile);
-          const uploadResponse = await fetchJson(`/api/admin/services/${serviceId}/upload-image`, {
+          const uploadResponse = await fetchJson(`/admin/services/${serviceId}/upload-image`, {
             method: 'POST',
             body: formData,
             isFormData: true,
@@ -1588,7 +1588,7 @@ const AdminDashboard = () => {
         try {
           const formData = new FormData();
           formData.append('video', serviceVideoFile);
-          const uploadResponse = await fetchJson(`/api/admin/services/${serviceId}/upload-video`, {
+          const uploadResponse = await fetchJson(`/admin/services/${serviceId}/upload-video`, {
             method: 'POST',
             body: formData,
             isFormData: true,
@@ -1664,7 +1664,7 @@ const AdminDashboard = () => {
     }
 
     try {
-      await fetchJson(`/api/admin/offers/${offerId}`, { method: 'DELETE' });
+      await fetchJson(`/admin/offers/${offerId}`, { method: 'DELETE' });
       setOffersState((prev) => prev.filter((offer) => offer.id !== offerId));
       if (editingOfferId === offerId) {
         setEditingOfferId(null);
@@ -1698,13 +1698,13 @@ const AdminDashboard = () => {
       let updatedOffer: any;
 
       if (editingOfferId) {
-        updatedOffer = await fetchJson(`/api/admin/offers/${editingOfferId}`, {
+        updatedOffer = await fetchJson(`/admin/offers/${editingOfferId}`, {
           method: 'PUT',
           body: JSON.stringify(payload),
         });
         offerId = editingOfferId;
       } else {
-        updatedOffer = await fetchJson('/api/admin/offers', {
+        updatedOffer = await fetchJson('/admin/offers', {
           method: 'POST',
           body: JSON.stringify(payload),
         });
@@ -1715,7 +1715,7 @@ const AdminDashboard = () => {
         try {
           const formData = new FormData();
           formData.append('image', offerImageFile);
-          const uploadResponse = await fetchJson(`/api/admin/offers/${offerId}/upload-image`, {
+          const uploadResponse = await fetchJson(`/admin/offers/${offerId}/upload-image`, {
             method: 'POST',
             body: formData,
             isFormData: true,
@@ -1796,13 +1796,13 @@ const AdminDashboard = () => {
         return;
       }
 
-      const response = await fetchJson('/api/admin/bookings/bulk-import', {
+      const response = await fetchJson('/admin/bookings/bulk-import', {
         method: 'POST',
         body: JSON.stringify({ bookings: importedData }),
       });
 
       if (response.success) {
-        const bookings = await fetchJson('/api/admin/bookings');
+        const bookings = await fetchJson('/admin/bookings');
         setBookingsState(
           (bookings as any[]).map((booking) => ({
             id: booking._id || booking.id,
@@ -1931,13 +1931,13 @@ const AdminDashboard = () => {
         return;
       }
 
-      const response = await fetchJson('/api/admin/bookings/bulk-import', {
+      const response = await fetchJson('/admin/bookings/bulk-import', {
         method: 'POST',
         body: JSON.stringify({ bookings }),
       });
 
       if (response.success) {
-        const updatedBookings = await fetchJson('/api/admin/bookings');
+        const updatedBookings = await fetchJson('/admin/bookings');
         setBookingsState(
           (updatedBookings as any[]).map((booking) => ({
             id: booking._id || booking.id,
@@ -1999,13 +1999,13 @@ const AdminDashboard = () => {
         paymentStatus: serviceBookingForm.paymentStatus || 'pending',
       };
 
-      const response = await fetchJson('/api/admin/service-bookings', {
+      const response = await fetchJson('/admin/service-bookings', {
         method: 'POST',
         body: JSON.stringify(payload),
       });
 
       if (response) {
-        const updated = await fetchJson('/api/admin/service-bookings');
+        const updated = await fetchJson('/admin/service-bookings');
         setServiceBookingsState((updated as any[]).map(normalizeServiceBooking));
         setIsServiceBookingFormOpen(false);
         alert('Service booking created successfully!');
@@ -2048,7 +2048,7 @@ const AdminDashboard = () => {
 
   const handleDeleteNewsletterSubscription = async (id: string) => {
     try {
-      await fetchJson(`/api/admin/newsletters/${id}`, { method: 'DELETE' });
+      await fetchJson(`/admin/newsletters/${id}`, { method: 'DELETE' });
       toast.success('Subscription deleted');
       setNewsletterSubscriptions(prev => prev.filter(sub => sub._id !== id));
     } catch (error) {
@@ -2189,13 +2189,13 @@ const AdminDashboard = () => {
       console.log('All bookings being sent:', JSON.stringify(bookings.slice(0, 3), null, 2));
       console.log('Total bookings to import:', bookings.length);
 
-      const response = await fetchJson('/api/admin/service-bookings/bulk-import', {
+      const response = await fetchJson('/admin/service-bookings/bulk-import', {
         method: 'POST',
         body: JSON.stringify({ bookings }),
       });
 
       if (response.success) {
-        const updated = await fetchJson('/api/admin/service-bookings');
+        const updated = await fetchJson('/admin/service-bookings');
         setServiceBookingsState((updated as any[]).map(normalizeServiceBooking));
         let message = `Successfully imported ${response.count} service booking(s)!`;
         if (response.errors && response.errors.length > 0) {
@@ -2337,7 +2337,7 @@ const AdminDashboard = () => {
         paymentStatus: 'pending',
       };
 
-      const response = await fetchJson('/api/admin/bookings', {
+      const response = await fetchJson('/admin/bookings', {
         method: 'POST',
         body: JSON.stringify(payload),
       });
@@ -2372,7 +2372,7 @@ const AdminDashboard = () => {
           }
         }
 
-        const bookings = await fetchJson('/api/admin/bookings');
+        const bookings = await fetchJson('/admin/bookings');
         setBookingsState(
           (bookings as any[]).map((booking) => ({
             id: booking._id || booking.id,

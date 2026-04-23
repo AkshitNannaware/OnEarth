@@ -34,7 +34,7 @@ export function useNotifications() {
     setLoading(true);
     setError(null);
     const token = getToken();
-    fetch(`${API_URL}/api/notifications`, {
+    fetch(`${API_BASE}/notifications`, {
       headers: {
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -56,7 +56,7 @@ export function useNotifications() {
   const markAsRead = useCallback(async (id: string) => {
     const token = getToken();
     try {
-      const res = await fetch(`${API_URL}/api/notifications/${id}/read`, {
+      const res = await fetch(`${API_BASE}/notifications/${id}/read`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export function useNotifications() {
   const deleteNotification = useCallback(async (id: string) => {
     const token = getToken();
     try {
-      const res = await fetch(`${API_URL}/api/notifications/${id}`, {
+      const res = await fetch(`${API_BASE}/notifications/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

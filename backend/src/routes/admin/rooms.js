@@ -11,10 +11,16 @@ router.use(requireDb);
 
 
 // Setup folders for uploads
-const roomImagesDir = path.join(__dirname, '..', '..', '..', 'uploads', 'rooms');
-const roomVideosDir = path.join(__dirname, '..', '..', '..', 'uploads', 'rooms', 'videos');
-fs.mkdirSync(roomImagesDir, { recursive: true });
-fs.mkdirSync(roomVideosDir, { recursive: true });
+const roomImagesDir = '/var/www/onearth_uploads/rooms';
+const roomVideosDir = '/var/www/onearth_uploads/rooms/videos';
+
+// Ensure folders exist (Sahi permission ke liye)
+if (!fs.existsSync(roomImagesDir)) {
+    fs.mkdirSync(roomImagesDir, { recursive: true });
+}
+if (!fs.existsSync(roomVideosDir)) {
+    fs.mkdirSync(roomVideosDir, { recursive: true });
+}
 
 // Multer Storage Config for Images
 const roomImageStorage = multer.diskStorage({

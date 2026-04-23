@@ -31,8 +31,7 @@ const Home = () => {
 	const [showMobileFilters, setShowMobileFilters] = useState(false);
 
 	const heroImage = '/15101348_3840_2160_60fps.mp4';
-	const fallbackRoomImage = 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1400';
-
+	
 	useEffect(() => {
 		const loadRooms = async () => {
 			setRoomsLoading(true);
@@ -118,13 +117,14 @@ const Home = () => {
 		: null;
 
 	const resolveRoomImage = (room: Room | null) => {
-		const imageUrl = room?.images?.[0] || fallbackRoomImage;
-		if (!imageUrl) return fallbackRoomImage;
+		const imageUrl = room?.images?.[0];
+		if (!imageUrl) return null;
 		if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) return imageUrl;
 		if (imageUrl.startsWith('/uploads/')) return `${API_BASE}${imageUrl}`;
 		if (!imageUrl.startsWith('/')) return `${API_BASE}/uploads/rooms/${imageUrl}`;
 		return `${API_BASE}${imageUrl}`;
 	};
+	
 	const resolveRoomVideo = (room: Room | null) => {
 		const videoUrl = room?.video || '';
 		if (!videoUrl) return '';
@@ -134,11 +134,10 @@ const Home = () => {
 		if (videoUrl.startsWith('/')) return `${API_BASE}${videoUrl}`;
 		return `${API_BASE}/${videoUrl}`;
 	};
+	
 	const resolveServiceImage = (service: any) => {
 		const imageUrl = String(service?.image || '').trim();
-		if (!imageUrl) {
-			return 'https://images.unsplash.com/photo-1516455207990-7a41e1d4ffd5?w=600&h=400&fit=crop';
-		}
+		if (!imageUrl) return null;
 		if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
 			return imageUrl;
 		}
@@ -153,6 +152,7 @@ const Home = () => {
 		}
 		return `${API_BASE}/${imageUrl}`;
 	};
+	
 	const resolveServiceVideo = (service: any) => {
 		const videoUrl = String(service?.video || '').trim();
 		if (!videoUrl) return '';
@@ -162,6 +162,7 @@ const Home = () => {
 		if (videoUrl.startsWith('/')) return `${API_BASE}${videoUrl}`;
 		return `${API_BASE}/${videoUrl}`;
 	};
+	
 	const resolveRoomMeta = (room: Room | null) => {
 		if (!room) {
 			return 'Signature stay | Curated comfort | Luxury details | 1 bathroom';
@@ -212,7 +213,7 @@ const Home = () => {
 
 		setIsSubscribing(true);
 		try {
-			const response = await fetch(`${API_BASE}/newsletter/subscribe`, {
+			const response = await fetch(`${API_BASE}/api/newsletter/subscribe`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -291,6 +292,11 @@ const Home = () => {
 			handleSearch();
 		}
 	};
+
+	// Get restaurant services
+	const restaurantServices = servicesState.filter(
+		(service) => service.category === 'restaurant' || service.category === 'dining'
+	);
 
 	return (
 		<div className="bg-[#3f4a40]">
@@ -510,12 +516,16 @@ const Home = () => {
 													playsInline
 													poster={resolveServiceImage(service) || undefined}
 												/>
-											) : (
+											) : resolveServiceImage(service) ? (
 												<img
 													src={resolveServiceImage(service)}
 													alt={service.name}
 													className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
 												/>
+											) : (
+												<div className="w-full h-full bg-gradient-to-br from-amber-800/50 to-stone-800/50 flex items-center justify-center">
+													<span className="text-white/50 text-sm">No image</span>
+												</div>
 											)}
 											{/* Overlay gradient */}
 											<div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
@@ -560,12 +570,16 @@ const Home = () => {
 															playsInline
 															poster={resolveServiceImage(service) || undefined}
 														/>
-													) : (
+													) : resolveServiceImage(service) ? (
 														<img
 															src={resolveServiceImage(service)}
 															alt={service.name}
 															className="w-full h-full object-cover"
 														/>
+													) : (
+														<div className="w-full h-full bg-gradient-to-br from-amber-800/50 to-stone-800/50 flex items-center justify-center">
+															<span className="text-white/50 text-xs">No image</span>
+														</div>
 													)}
 													{/* Overlay gradient */}
 													<div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
@@ -671,12 +685,16 @@ const Home = () => {
 										playsInline
 										poster={resolveRoomImage(prevAccommodation) || undefined}
 									/>
-								) : (
+								) : resolveRoomImage(prevAccommodation) ? (
 									<img
 										src={resolveRoomImage(prevAccommodation)}
 										alt={prevAccommodation?.name || 'Previous room'}
 										className="h-[220px] sm:h-[300px] md:h-[360px] w-full object-cover"
 									/>
+								) : (
+									<div className="h-[220px] sm:h-[300px] md:h-[360px] w-full bg-gradient-to-br from-stone-700 to-stone-800 flex items-center justify-center">
+										<span className="text-white/50 text-sm">No image</span>
+									</div>
 								)}
 								<div className="absolute inset-0 bg-black/35" />
 							</div>
@@ -693,12 +711,16 @@ const Home = () => {
 									playsInline
 									poster={resolveRoomImage(activeAccommodation) || undefined}
 								/>
-							) : (
+							) : resolveRoomImage(activeAccommodation) ? (
 								<img
 									src={resolveRoomImage(activeAccommodation)}
 									alt={activeAccommodation?.name || 'Featured room'}
 									className="h-[260px] sm:h-[340px] md:h-[420px] w-full object-cover"
 								/>
+							) : (
+								<div className="h-[260px] sm:h-[340px] md:h-[420px] w-full bg-gradient-to-br from-stone-700 to-stone-800 flex items-center justify-center">
+									<span className="text-white/50 text-sm">No image</span>
+								</div>
 							)}
 							<div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
 							<button
@@ -746,12 +768,16 @@ const Home = () => {
 										playsInline
 										poster={resolveRoomImage(nextAccommodation) || undefined}
 									/>
-								) : (
+								) : resolveRoomImage(nextAccommodation) ? (
 									<img
 										src={resolveRoomImage(nextAccommodation)}
 										alt={nextAccommodation?.name || 'Next room'}
 										className="h-[220px] sm:h-[300px] md:h-[360px] w-full object-cover"
 									/>
+								) : (
+									<div className="h-[220px] sm:h-[300px] md:h-[360px] w-full bg-gradient-to-br from-stone-700 to-stone-800 flex items-center justify-center">
+										<span className="text-white/50 text-sm">No image</span>
+									</div>
 								)}
 								<div className="absolute inset-0 bg-black/35" />
 							</div>
@@ -787,8 +813,7 @@ const Home = () => {
 				</div>
 			</section>
 
-
-			{/* Restaurant */}
+			{/* Restaurant - Mobile Swipeable Section */}
 			<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
 				<div className="text-center mb-10">
 					<div className="flex items-center justify-center gap-3 text-xs tracking-[0.35em] uppercase text-[#efece6]">
@@ -812,85 +837,159 @@ const Home = () => {
 					</div>
 				)}
 
-				{(() => {
-					const restaurantServices = servicesState.filter((service) => service.category === 'restaurant' || service.category === 'dining');
+				{restaurantServices.length === 0 && !servicesLoading ? (
+					<div className="rounded-3xl border border-stone-200 bg-white p-8 text-center text-[#efece6]">
+						No restaurants are available yet. Please check back soon.
+					</div>
+				) : (
+					<>
+						{/* Desktop Grid */}
+						<div className="hidden sm:grid grid-cols-1 md:grid-cols-3 gap-6">
+							{restaurantServices.map((restaurant, idx) => (
+								<div key={restaurant._id || restaurant.id || idx} className="group relative">
+									<div className="relative rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+										{resolveServiceVideo(restaurant) ? (
+											<video
+												src={resolveServiceVideo(restaurant)}
+												className="h-[260px] sm:h-[320px] md:h-[380px] w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+												autoPlay
+												muted
+												loop
+												playsInline
+												poster={resolveServiceImage(restaurant) || undefined}
+											/>
+										) : resolveServiceImage(restaurant) ? (
+											<img
+												src={resolveServiceImage(restaurant)}
+												alt={restaurant.name}
+												className="h-[260px] sm:h-[320px] md:h-[380px] w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+											/>
+										) : (
+											<div className="h-[260px] sm:h-[320px] md:h-[380px] w-full bg-gradient-to-br from-amber-800/50 to-stone-800/50 flex items-center justify-center">
+												<span className="text-white/50">No image</span>
+											</div>
+										)}
+										<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
-					if (restaurantServices.length === 0 && !servicesLoading) {
-						return (
-							<div className="rounded-3xl border border-stone-200 bg-white p-8 text-center text-[#efece6]">
-								No restaurants are available yet. Please check back soon.
-							</div>
-						);
-					}
+										{/* Badge */}
+										<div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center font-serif text-xl shadow-lg">
+											{idx + 1}
+										</div>
 
-					return (
-						<>
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-								{restaurantServices.map((restaurant, idx) => (
-									<div key={restaurant._id || restaurant.id || idx} className="group relative">
-										<div className="relative rounded-[24px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-											{resolveServiceVideo(restaurant) ? (
-												<video
-													src={resolveServiceVideo(restaurant)}
-													className="h-[260px] sm:h-[320px] md:h-[380px] w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-													autoPlay
-													muted
-													loop
-													playsInline
-													poster={resolveServiceImage(restaurant) || undefined}
-												/>
-											) : (
-												<img
-													src={resolveServiceImage(restaurant)}
-													alt={restaurant.name}
-													className="h-[260px] sm:h-[320px] md:h-[380px] w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-												/>
+										{/* Content */}
+										<div className="absolute bottom-6 left-6 right-6 text-white">
+											<div className="text-[10px] tracking-[0.3em] uppercase text-amber-200 mb-2">
+												{idx === 0 ? 'Signature' : idx === 1 ? 'Premium' : 'Exclusive'}
+											</div>
+											<h3 className="text-xl md:text-2xl font-serif mb-2">
+												{restaurant.name}
+											</h3>
+											{restaurant.description && (
+												<p className="text-xs text-stone-300 mb-2 line-clamp-2">
+													{restaurant.description}
+												</p>
 											)}
-											<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-
-											{/* Badge */}
-											<div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center font-serif text-xl shadow-lg">
-												{idx + 1}
-											</div>
-
-											{/* Content */}
-											<div className="absolute bottom-6 left-6 right-6 text-white">
-												<div className="text-[10px] tracking-[0.3em] uppercase text-amber-200 mb-2">
-													{idx === 0 ? 'Signature' : idx === 1 ? 'Premium' : 'Exclusive'}
-												</div>
-												<h3 className="text-xl md:text-2xl font-serif mb-2">
-													{restaurant.name}
-												</h3>
-												{restaurant.description && (
-													<p className="text-xs text-stone-300 mb-2 line-clamp-2">
-														{restaurant.description}
-													</p>
-												)}
-												<Link
-													to="/services#services-restaurant"
-													className="text-xs text-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-												>
-													Explore menu →
-												</Link>
-											</div>
+											<Link
+												to="/services#services-restaurant"
+												className="text-xs text-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+											>
+												Explore menu →
+											</Link>
 										</div>
 									</div>
-								))}
+								</div>
+							))}
+						</div>
+
+						{/* Mobile Swipeable Carousel for Restaurants */}
+						<div className="sm:hidden relative">
+							<div className="overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4 -mx-2 px-1">
+								<div className="flex gap-4 w-max">
+									{restaurantServices.map((restaurant, idx) => (
+										<div
+											key={restaurant._id || restaurant.id || idx}
+											className="snap-start w-[85vw] max-w-[320px] flex-shrink-0"
+										>
+											<div className="group relative rounded-[24px] overflow-hidden shadow-lg">
+												{resolveServiceVideo(restaurant) ? (
+													<video
+														src={resolveServiceVideo(restaurant)}
+														className="h-[280px] w-full object-cover"
+														autoPlay
+														muted
+														loop
+														playsInline
+														poster={resolveServiceImage(restaurant) || undefined}
+													/>
+												) : resolveServiceImage(restaurant) ? (
+													<img
+														src={resolveServiceImage(restaurant)}
+														alt={restaurant.name}
+														className="h-[280px] w-full object-cover"
+													/>
+												) : (
+													<div className="h-[280px] w-full bg-gradient-to-br from-amber-800/50 to-stone-800/50 flex items-center justify-center">
+														<span className="text-white/50 text-sm">No image</span>
+													</div>
+												)}
+												<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+												{/* Badge */}
+												<div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-serif text-lg shadow-lg">
+													{idx + 1}
+												</div>
+
+												{/* Content */}
+												<div className="absolute bottom-6 left-6 right-6 text-white">
+													<div className="text-[10px] tracking-[0.3em] uppercase text-amber-200 mb-2">
+														{idx === 0 ? 'Signature' : idx === 1 ? 'Premium' : 'Exclusive'}
+													</div>
+													<h3 className="text-xl font-serif mb-2">
+														{restaurant.name}
+													</h3>
+													{restaurant.description && (
+														<p className="text-xs text-stone-300 mb-3 line-clamp-2">
+															{restaurant.description}
+														</p>
+													)}
+													<Link
+														to="/services#services-restaurant"
+														className="inline-block rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wide bg-amber-500 text-stone-900 hover:bg-amber-400 transition-colors"
+													>
+														Explore Menu
+													</Link>
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
 							</div>
 
-							<div className="mt-8 text-center">
-								<p className="text-[#efece6] max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
-									Experience culinary artistry where every dish tells a story, blending tradition with innovation in an atmosphere of refined elegance.
-								</p>
-								<Link to="/services">
-									<Button className="mt-6 rounded-full px-8 h-12 text-xs tracking-[0.2em] uppercase bg-amber-500 text-stone-900 hover:bg-amber-400">
-										Explore our Restaurants...
-									</Button>
-								</Link>
-							</div>
-						</>
-					);
-				})()}
+							{/* Scroll Indicator Dots */}
+							{restaurantServices.length > 1 && (
+								<div className="flex justify-center gap-1.5 mt-4">
+									{restaurantServices.map((_, idx) => (
+										<div
+											key={idx}
+											className="h-1.5 w-1.5 rounded-full bg-[#c9c3b6]/50"
+										/>
+									))}
+								</div>
+							)}
+						</div>
+
+						<div className="mt-8 text-center">
+							<p className="text-[#efece6] max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
+								Experience culinary artistry where every dish tells a story, blending tradition with innovation in an atmosphere of refined elegance.
+							</p>
+							<Link to="/services">
+								<Button className="mt-6 rounded-full px-8 h-12 text-xs tracking-[0.2em] uppercase bg-amber-500 text-stone-900 hover:bg-amber-400">
+									Explore our Restaurants...
+								</Button>
+							</Link>
+						</div>
+					</>
+				)}
 			</section>
 
 			{/* About Section */}

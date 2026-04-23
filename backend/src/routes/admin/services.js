@@ -11,11 +11,18 @@ const router = express.Router();
 router.use(requireDb);
 
 // 1. Setup folders for uploads
-const serviceImagesDir = path.join(__dirname, '..', '..', '..', 'uploads', 'services');
-const serviceVideosDir = path.join(__dirname, '..', '..', '..', 'uploads', 'services', 'videos');
 
-fs.mkdirSync(serviceImagesDir, { recursive: true });
-fs.mkdirSync(serviceVideosDir, { recursive: true });
+const serviceImagesDir = '/var/www/onearth_uploads/services';
+const serviceVideosDir = '/var/www/onearth_uploads/services/videos';
+
+// Ensure folders exist
+if (!fs.existsSync(serviceImagesDir)) {
+    fs.mkdirSync(serviceImagesDir, { recursive: true });
+}
+if (!fs.existsSync(serviceVideosDir)) {
+    fs.mkdirSync(serviceVideosDir, { recursive: true });
+}
+
 
 // 2. Multer Storage Configuration
 const serviceImageStorage = multer.diskStorage({

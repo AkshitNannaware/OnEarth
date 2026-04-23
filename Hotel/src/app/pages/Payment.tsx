@@ -38,7 +38,7 @@ const Payment = () => {
           const auth = JSON.parse(localStorage.getItem('auth') || '{}');
           const token = auth.token as string | undefined;
           if (!token) throw new Error('Session expired. Please log in again.');
-          const response = await fetch(`${API_BASE}/api/service-bookings/${serviceBookingId}`, {
+          const response = await fetch(`${API_BASE}/service-bookings/${serviceBookingId}`, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`,
@@ -110,7 +110,7 @@ const Payment = () => {
         if (!roomId) {
           return;
         }
-        const response = await fetch(`${API_BASE}/api/rooms/${roomId}`);
+        const response = await fetch(`${API_BASE}/rooms/${roomId}`);
         if (!response.ok) {
           throw new Error(`Failed to load room (${response.status})`);
         }
@@ -182,7 +182,7 @@ const Payment = () => {
       }
       try {
         // Create Razorpay order for service booking
-        const orderResponse = await fetch(`${API_BASE}/api/payments/razorpay/service-order`, {
+        const orderResponse = await fetch(`${API_BASE}/payments/razorpay/service-order`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ const Payment = () => {
           },
           handler: async (response: any) => {
             try {
-              const verifyResponse = await fetch(`${API_BASE}/api/payments/razorpay/service-verify`, {
+              const verifyResponse = await fetch(`${API_BASE}/payments/razorpay/service-verify`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -514,7 +514,7 @@ const Payment = () => {
     }
 
     try {
-      const orderResponse = await fetch(`${API_BASE}/api/payments/razorpay/order`, {
+      const orderResponse = await fetch(`${API_BASE}/payments/razorpay/order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -558,7 +558,7 @@ const Payment = () => {
         },
         handler: async (response: any) => {
           try {
-            const verifyResponse = await fetch(`${API_BASE}/api/payments/razorpay/verify`, {
+            const verifyResponse = await fetch(`${API_BASE}/payments/razorpay/verify`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

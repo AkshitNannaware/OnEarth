@@ -91,7 +91,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     }
 
     try {
-      const response = await fetch(`${API_BASE}/api/bookings`, {
+      const response = await fetch(`${API_BASE}/bookings`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -158,7 +158,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const token = getAuthToken();
-    const response = await fetch(`${API_BASE}/api/bookings`, {
+    const response = await fetch(`${API_BASE}/bookings`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -211,7 +211,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     if (status === 'check-in') backendStatus = 'checked-in';
     if (status === 'check-out') backendStatus = 'checked-out';
     const token = getAuthToken();
-    const response = await fetch(`${API_BASE}/api/bookings/${bookingId}/status`, {
+    const response = await fetch(`${API_BASE}/bookings/${bookingId}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -245,7 +245,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
 
   const updatePaymentStatus = async (bookingId: string, paymentStatus: Booking['paymentStatus']) => {
     const token = getAuthToken();
-    const response = await fetch(`${API_BASE}/api/bookings/${bookingId}/payment-status`, {
+    const response = await fetch(`${API_BASE}/bookings/${bookingId}/payment-status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     formData.append('idProof', idProof);
     formData.append('idType', idType);
 
-    const response = await fetch(`${API_BASE}/api/bookings/${bookingId}/id-proof`, {
+    const response = await fetch(`${API_BASE}/bookings/${bookingId}/id-proof`, {
       method: 'PATCH',
       headers: {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),

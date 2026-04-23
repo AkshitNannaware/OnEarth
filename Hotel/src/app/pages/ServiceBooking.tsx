@@ -83,7 +83,7 @@ const ServiceBooking = () => {
       setIsLoading(true);
       setLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/services/${serviceId}`);
+        const response = await fetch(`${API_BASE}/services/${serviceId}`);
         if (!response.ok) {
           throw new Error(`Failed to load service (${response.status})`);
         }
@@ -164,7 +164,7 @@ const ServiceBooking = () => {
     }
 
     try {
-      const response = await fetch(`${API_BASE}/api/service-bookings`, {
+      const response = await fetch(`${API_BASE}/service-bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

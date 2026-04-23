@@ -87,7 +87,7 @@ const RoomListing = () => {
       setIsLoading(true);
       setLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/rooms`);
+        const response = await fetch(`${API_BASE}/rooms`);
         if (!response.ok) throw new Error(`Failed to load rooms (${response.status})`);
         const data = await response.json();
         const normalized = (data as any[]).map((room) => ({

@@ -59,7 +59,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+app.use('/uploads', express.static('/var/www/onearth_uploads'));
 app.use((req, res, next) => {
   const start = Date.now();
   res.on('finish', () => {

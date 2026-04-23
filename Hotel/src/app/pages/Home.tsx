@@ -6,6 +6,7 @@ import { Input } from '../components/ui/input';
 import Footer from '../components/Footer';
 import { toast } from 'sonner';
 import type { Room } from '../types/room';
+import API_BASE from "../../config/api";
 
 const ctaImage = '/0c0b1b9fcebeedd073f75517ee322f51.jpg';
 
@@ -31,14 +32,13 @@ const Home = () => {
 
 	const heroImage = '/15101348_3840_2160_60fps.mp4';
 	const fallbackRoomImage = 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1400';
-	const API_BASE = (import.meta.env?.VITE_API_URL as string | undefined) || 'http://localhost:5000';
 
 	useEffect(() => {
 		const loadRooms = async () => {
 			setRoomsLoading(true);
 			setRoomsError(null);
 			try {
-				const response = await fetch(`${API_BASE}/api/rooms`);
+				const response = await fetch(`${API_BASE}/rooms`);
 				if (!response.ok) {
 					throw new Error(`Failed to load rooms (${response.status})`);
 				}
@@ -73,7 +73,7 @@ const Home = () => {
 			setServicesLoading(true);
 			setServicesError(null);
 			try {
-				const response = await fetch(`${API_BASE}/api/services`);
+				const response = await fetch(`${API_BASE}/services`);
 				if (!response.ok) {
 					throw new Error(`Failed to load services (${response.status})`);
 				}
@@ -212,7 +212,7 @@ const Home = () => {
 
 		setIsSubscribing(true);
 		try {
-			const response = await fetch(`${API_BASE}/api/newsletter/subscribe`, {
+			const response = await fetch(`${API_BASE}/newsletter/subscribe`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

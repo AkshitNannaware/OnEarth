@@ -42,8 +42,8 @@ const Contact = () => {
     const fetchRoomsAndServices = async () => {
       try {
         const [roomsRes, servicesRes] = await Promise.all([
-          fetch(`${API_BASE}/api/rooms`),
-          fetch(`${API_BASE}/api/services`)
+          fetch(`${API_BASE}/rooms`),
+          fetch(`${API_BASE}/services`)
         ]);
         if (roomsRes.ok) setRooms((await roomsRes.json()).slice(0, 3));
         if (servicesRes.ok) setServices((await servicesRes.json()).slice(0, 3));
@@ -69,7 +69,7 @@ const Contact = () => {
     event.preventDefault();
     setIsSending(true);
     try {
-      const response = await fetch(`${API_BASE}/api/contact`, {
+      const response = await fetch(`${API_BASE}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

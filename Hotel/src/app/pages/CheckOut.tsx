@@ -34,7 +34,7 @@ const CheckOut = () => {
       
       setRoomLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/rooms/${booking.roomId}`);
+        const response = await fetch(`${API_BASE}/rooms/${booking.roomId}`);
         if (!response.ok) {
           throw new Error(`Failed to load room (${response.status})`);
         }

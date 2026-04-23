@@ -16,7 +16,7 @@ const Footer = ({ isAdmin = false }) => {
     youtube: 'https://youtube.com/yourchannel',
   });
   useEffect(() => {
-    fetch('https://onearths.com/api/branding')
+    fetch('/api/branding')
       .then(res => res.json())
       .then(data => setBranding(prev => ({ ...prev, ...data })))
       .catch(() => { });

@@ -42,7 +42,7 @@ const ForgotPassword = () => {
     }
     setIsSending(true);
     try {
-      const response = await fetch(`${API_BASE}/api/auth/forgot-password/request-otp`, {
+      const response = await fetch(`${API_BASE}/auth/forgot-password/request-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier }),
@@ -67,7 +67,7 @@ const ForgotPassword = () => {
     }
     setIsSending(true);
     try {
-      const response = await fetch(`${API_BASE}/api/auth/forgot-password/verify-otp`, {
+      const response = await fetch(`${API_BASE}/auth/forgot-password/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier, otp }),
@@ -105,7 +105,7 @@ const ForgotPassword = () => {
     setConfirmError('');
     setIsSending(true);
     try {
-      const response = await fetch(`${API_BASE}/api/auth/forgot-password/reset`, {
+      const response = await fetch(`${API_BASE}/auth/forgot-password/reset`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier, resetToken, newPassword }),

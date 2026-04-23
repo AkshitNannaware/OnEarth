@@ -226,7 +226,7 @@ const Profile = () => {
     const loadRooms = async () => {
       setRoomsLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/rooms`);
+        const response = await fetch(`${API_BASE}/rooms`);
         if (!response.ok) {
           throw new Error(`Failed to load rooms (${response.status})`);
         }
@@ -266,7 +266,7 @@ const Profile = () => {
           throw new Error('Session expired. Please log in again.');
         }
 
-        const response = await fetch(`${API_BASE}/api/admin/bookings`, {
+        const response = await fetch(`${API_BASE}/admin/bookings`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -304,7 +304,7 @@ const Profile = () => {
           throw new Error('Session expired. Please log in again.');
         }
 
-        const response = await fetch(`${API_BASE}/api/service-bookings`, {
+        const response = await fetch(`${API_BASE}/service-bookings`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -379,7 +379,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await fetch(`${API_BASE}/api/auth/profile`, {
+      const response = await fetch(`${API_BASE}/auth/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -447,7 +447,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await fetch(`${API_BASE}/api/auth/change-password`, {
+      const response = await fetch(`${API_BASE}/auth/change-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -494,7 +494,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await fetch(`${API_BASE}/api/auth/profile`, {
+      const response = await fetch(`${API_BASE}/auth/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -1228,7 +1228,7 @@ const Profile = () => {
                                   <Button
                                     className="mt-2"
                                     variant="outline"
-                                    onClick={() => downloadFile(`${API_BASE}/api/bookings/${booking.id}/invoice`, `invoice-room-${booking.id}.pdf`)}
+                                    onClick={() => downloadFile(`${API_BASE}/bookings/${booking.id}/invoice`, `invoice-room-${booking.id}.pdf`)}
                                   >
                                     Download Invoice
                                   </Button>
@@ -1261,7 +1261,7 @@ const Profile = () => {
                                 <Button
                                   className="mt-2"
                                   variant="outline"
-                                  onClick={() => downloadFile(`${API_BASE}/api/service-bookings/${booking.id}/invoice`, `invoice-service-${booking.id}.pdf`)}
+                                  onClick={() => downloadFile(`${API_BASE}/service-bookings/${booking.id}/invoice`, `invoice-service-${booking.id}.pdf`)}
                                 >
                                   Download Invoice
                                 </Button>

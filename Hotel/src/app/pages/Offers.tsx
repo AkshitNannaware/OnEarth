@@ -56,7 +56,7 @@ const Offers = () => {
       setIsLoading(true);
       setLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/offers`);
+        const response = await fetch(`${API_BASE}/offers`);
         if (!response.ok) {
           throw new Error(`Failed to load offers (${response.status})`);
         }

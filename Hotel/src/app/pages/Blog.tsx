@@ -25,7 +25,7 @@ const Blog = () => {
       try {
         setIsLoading(true);
         setLoadError('');
-        const response = await fetch(`${API_BASE}/api/blogs`);
+        const response = await fetch(`${API_BASE}/blogs`);
         if (!response.ok) {
           throw new Error('Failed to fetch blogs');
         }

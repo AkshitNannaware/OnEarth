@@ -64,7 +64,7 @@ const RoomDetails = () => {
       setIsLoading(true);
       setLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/rooms/${id}`);
+        const response = await fetch(`${API_BASE}/rooms/${id}`);
         if (!response.ok) throw new Error(`Room not found (${response.status})`);
         const data = await response.json();
         

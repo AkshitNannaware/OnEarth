@@ -111,7 +111,7 @@ const AdminSignup = () => {
     }
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE}/api/admin/admin-signup`, {
+      const response = await fetch(`${API_BASE}/admin/admin-signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

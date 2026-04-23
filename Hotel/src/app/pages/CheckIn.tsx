@@ -47,7 +47,7 @@ const CheckIn = () => {
       
       setRoomLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/rooms/${booking.roomId}`);
+        const response = await fetch(`${API_BASE}/rooms/${booking.roomId}`);
         if (!response.ok) {
           throw new Error(`Failed to load room (${response.status})`);
         }
@@ -117,7 +117,7 @@ const CheckIn = () => {
       if (earlyCheckInFee > 0) {
         try {
           const token = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')).token : null;
-          await fetch(`${API_BASE}/api/bookings/${booking.id}/early-checkin-fee`, {
+          await fetch(`${API_BASE}/bookings/${booking.id}/early-checkin-fee`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

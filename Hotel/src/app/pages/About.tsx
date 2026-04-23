@@ -45,7 +45,7 @@ const About = () => {
 
     setIsSubscribing(true);
     try {
-      const response = await fetch(`${API_BASE}/api/newsletter/subscribe`, {
+      const response = await fetch(`${API_BASE}/newsletter/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

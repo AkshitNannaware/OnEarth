@@ -9,7 +9,7 @@ const updateBookingStatus = async (
     const body: any = { status };
     if (paymentStatus) body.paymentStatus = paymentStatus;
     if (paymentMethod) body.paymentMethod = paymentMethod;
-    const response = await fetch(`${API_BASE}/api/admin/bookings/${bookingId}/status`, {
+    const response = await fetch(`${API_BASE}/admin/bookings/${bookingId}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -552,7 +552,7 @@ const AdminDashboard = () => {
         return;
       }
 
-      const response = await fetch(`${API_BASE}/api/admin/service-bookings/${bookingId}/status`, {
+      const response = await fetch(`${API_BASE}/admin/service-bookings/${bookingId}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -628,7 +628,7 @@ const AdminDashboard = () => {
     try {
       const auth = JSON.parse(localStorage.getItem('auth') || '{}');
       const token = auth.token;
-      const response = await fetch(`${API_BASE}/api/admin/users`, {
+      const response = await fetch(`${API_BASE}/admin/users`, {
         headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       });
       if (response.ok) {
@@ -658,7 +658,7 @@ const AdminDashboard = () => {
       if (brandingLogoFile) {
         const formData = new FormData();
         formData.append('logo', brandingLogoFile);
-        const uploadResponse = await fetch(`${API_BASE}/api/admin/profile/upload-logo`, {
+        const uploadResponse = await fetch(`${API_BASE}/admin/profile/upload-logo`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -675,7 +675,7 @@ const AdminDashboard = () => {
         setBrandingLogoFile(null);
       }
 
-      const response = await fetch(`${API_BASE}/api/admin/profile`, {
+      const response = await fetch(`${API_BASE}/admin/profile`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -733,7 +733,7 @@ const AdminDashboard = () => {
         setSecurityError('No auth token found. Please log in again.');
         return;
       }
-      const response = await fetch(`${API_BASE}/api/admin/profile/password`, {
+      const response = await fetch(`${API_BASE}/admin/profile/password`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -1094,7 +1094,7 @@ const AdminDashboard = () => {
       try {
         const token = getAuthToken();
         if (!token) return;
-        const response = await fetch(`${API_BASE}/api/admin/profile`, {
+        const response = await fetch(`${API_BASE}/admin/profile`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -2059,7 +2059,7 @@ const AdminDashboard = () => {
   const handleExportNewsletterSubscriptions = async () => {
     try {
       const token = getAuthToken();
-      const response = await fetch(`${API_BASE}/api/admin/newsletters/export`, {
+      const response = await fetch(`${API_BASE}/admin/newsletters/export`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -2351,7 +2351,7 @@ const AdminDashboard = () => {
             formData.append('idProof', bookingIdProofFile);
             formData.append('idType', bookingIdProofType);
 
-            const uploadResponse = await fetch(`${API_BASE}/api/admin/bookings/${bookingId}/id-proof`, {
+            const uploadResponse = await fetch(`${API_BASE}/admin/bookings/${bookingId}/id-proof`, {
               method: 'PATCH',
               headers: token ? { Authorization: `Bearer ${token}` } : undefined,
               body: formData,

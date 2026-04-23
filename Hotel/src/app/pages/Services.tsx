@@ -95,7 +95,7 @@ const Services = () => {
       setIsLoading(true);
       setLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/services`);
+        const response = await fetch(`${API_BASE}/services`);
         if (!response.ok) {
           throw new Error(`Failed to load services (${response.status})`);
         }

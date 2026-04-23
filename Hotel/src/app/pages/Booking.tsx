@@ -81,7 +81,7 @@ const Booking = () => {
             token = JSON.parse(auth).token;
           } catch {}
         }
-        fetch(`${API_BASE}/api/admin/bookings/${bookingIdFromUrl}`, {
+        fetch(`${API_BASE}/admin/bookings/${bookingIdFromUrl}`, {
           headers: {
             ...(token ? { Authorization: `Bearer ${token}` } : {})
           }
@@ -200,7 +200,7 @@ const Booking = () => {
     const loadRoom = async () => {
       setRoomLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/rooms/${currentBooking.roomId}`);
+        const response = await fetch(`${API_BASE}/rooms/${currentBooking.roomId}`);
         if (!response.ok) {
           throw new Error(`Failed to load room (${response.status})`);
         }
@@ -262,7 +262,7 @@ const Booking = () => {
           const token = auth.token;
           
           if (token) {
-            await fetch(`${API_BASE}/api/auth/profile`, {
+            await fetch(`${API_BASE}/auth/profile`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',

@@ -47,7 +47,7 @@ const PaymentSuccess = () => {
         const token = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')!).token : null;
         
         // First, fetch the service booking details
-        const res = await fetch(`${API_BASE}/api/service-bookings/${serviceBookingId}`, {
+        const res = await fetch(`${API_BASE}/service-bookings/${serviceBookingId}`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         
@@ -60,7 +60,7 @@ const PaymentSuccess = () => {
         
         // Fetch service details
         if (data.serviceId) {
-          const sres = await fetch(`${API_BASE}/api/services/${data.serviceId}`);
+          const sres = await fetch(`${API_BASE}/services/${data.serviceId}`);
           if (sres.ok) {
             const sdata = await sres.json();
             setService(sdata);
@@ -84,7 +84,7 @@ const PaymentSuccess = () => {
             };
           }
           // Try multiple possible endpoints
-          const endpoint = `${API_BASE}/api/service-bookings/${serviceBookingId}/payment-status`;
+          const endpoint = `${API_BASE}/service-bookings/${serviceBookingId}/payment-status`;
           try {
             const updateRes = await fetch(endpoint, {
               method: 'PATCH',
@@ -117,7 +117,7 @@ const PaymentSuccess = () => {
       (async () => {
         try {
           const token = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')!).token : null;
-          const res = await fetch(`${API_BASE}/api/bookings/${bookingId}`, {
+          const res = await fetch(`${API_BASE}/bookings/${bookingId}`, {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
           });
           if (res.ok) {
@@ -155,7 +155,7 @@ const PaymentSuccess = () => {
     const loadRoom = async () => {
       setRoomLoadError(null);
       try {
-        const response = await fetch(`${API_BASE}/api/rooms/${booking?.roomId}`);
+        const response = await fetch(`${API_BASE}/rooms/${booking?.roomId}`);
         if (!response.ok) {
           throw new Error(`Failed to load room (${response.status})`);
         }

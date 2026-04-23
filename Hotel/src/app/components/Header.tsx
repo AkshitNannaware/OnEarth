@@ -44,10 +44,6 @@ const Header = () => {
   const popupNotifications = notifications.filter((n) => !dismissedIds.has(n._id));
   const profileRef = useRef<HTMLDivElement>(null);
 
-
-
-
-
   // Close profile popover when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -80,6 +76,7 @@ const Header = () => {
             {effectiveLogo && (
               <div className="flex items-center shrink-0">
                 <img 
+                  onClick={() => navigate('/admin', { state: { tab: 'dashboard' } })}
                   src={effectiveLogo} 
                   alt="Logo" 
                   className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
@@ -149,6 +146,7 @@ const Header = () => {
             {effectiveLogo && (
               <div className="flex items-center shrink-0">
                 <img 
+                  onClick={() => navigate('/')}
                   src={effectiveLogo} 
                   alt="Logo" 
                   className="h-12 sm:h-14 lg:h-15 w-auto object-containn pr-20"

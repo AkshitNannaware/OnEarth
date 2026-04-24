@@ -1,9 +1,4 @@
 User-agent: *
 Allow: /
 
-Disallow: /admin
-Disallow: /admin/
-Disallow: /admin-signup
-
 Sitemap: https://hotel-frontend-orcin.vercel.app/sitemap.xml
-

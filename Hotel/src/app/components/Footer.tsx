@@ -147,13 +147,13 @@ const Footer = ({ isAdmin = false }) => {
                 </h2>
                 <nav className="space-y-2">
                   {[
-                    { label: 'Dashboard', to: 'dashboard' },
-                    { label: 'Manage Bookings', to: 'bookings' },
-                    { label: 'Manage Rooms', to: 'rooms' },
-                    { label: 'Manage Services', to: 'services' },
-                    { label: 'Manage Offers', to: 'offers' },
-                    { label: 'Manage Newsletters', to: 'newsletters' },
-                    { label: 'Manage Contacts', to: 'contacts' },
+                    { label: 'Dashboard', to: '/admin?tab=dashboard' },
+                    { label: 'Manage Bookings', to: '/admin?tab=bookings' },
+                    { label: 'Manage Rooms', to: '/admin?tab=rooms' },
+                    { label: 'Manage Services', to: '/admin?tab=services' },
+                    { label: 'Manage Offers', to: '/admin?tab=offers' },
+                    { label: 'Manage Newsletters', to: '/admin?tab=newsletters' },
+                    { label: 'Manage Contacts', to: '/admin?tab=contacts' },
                   ].map((item) => (
                     <Link
                       key={item.label}
@@ -174,22 +174,22 @@ const Footer = ({ isAdmin = false }) => {
                 </h3>
                 <ul className="space-y-2 text-sm text-[#c9c3b6]">
                   <li>
-                    <Link to="/admin/bookings" className="hover:text-[#efece6] transition-colors duration-200">
+                    <Link to="/admin?tab=bookings" className="hover:text-[#efece6] transition-colors duration-200">
                       All Bookings
                     </Link>
                   </li>
                   <li>
-                    <Link to="/admin/service-bookings" className="hover:text-[#efece6] transition-colors duration-200">
+                    <Link to="/admin?tab=service-bookings" className="hover:text-[#efece6] transition-colors duration-200">
                       Service Bookings
                     </Link>
                   </li>
                   <li>
-                    <Link to="/admin/offers" className="hover:text-[#efece6] transition-colors duration-200">
+                    <Link to="/admin?tab=offers" className="hover:text-[#efece6] transition-colors duration-200">
                       All Offers
                     </Link>
                   </li>
                   <li>
-                    <Link to="/admin" state={{ tab: 'settings' }} className="hover:text-[#efece6] transition-colors duration-200">
+                    <Link to="/admin?tab=settings" className="hover:text-[#efece6] transition-colors duration-200">
                       Settings
                     </Link>
                   </li>

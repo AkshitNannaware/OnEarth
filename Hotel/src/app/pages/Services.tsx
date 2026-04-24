@@ -170,7 +170,7 @@ const Services = () => {
               {Object.entries(categories).map(([key, label]) => {
                 const isActive = filterCategory === key;
                 return (
-                  <butt\on
+                  <button
                     key={label}
                     type="button"
                     className={`rounded-full border px-4 py-2 text-xs transition-all duration-300 ${
@@ -232,15 +232,9 @@ const Services = () => {
 
               {!isLoading && !loadError && services.length > 0 &&
                 Object.entries(categories)
-<<<<<<< HEAD
-                  .filter(([key]) => !filterCategory || key === filterCategory)
-                  .map(([category, title]) => {
-                    const categoryServices = services.filter((service) => service.category === category);
-=======
                 .filter(([key]) => !filterCategory || filterCategory === key)
                 .map(([category, title]) => {
                   const categoryServices = services.filter((service) => service.category === category);
->>>>>>> 789bb8e78b71ab5f5adc411b2a2830031074719c
                   return (
                     <div
                       key={category}

@@ -20,7 +20,7 @@ const Services = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [filterCategory, setFilterCategory] = useState<string | null>(null);
 
   const categories = {
     restaurant: 'Bite Book (Restaurant)',
@@ -46,15 +46,8 @@ const Services = () => {
   } as const;
 
   const handleCategoryClick = (displayName: string) => {
-    const key = displayNameToKey[displayName];
-    if (selectedCategory === key) {
-      // Toggle off if already selected
-      setSelectedCategory(null);
-    } else {
-      setSelectedCategory(key);
-      // Smooth scroll to top of content when filtering
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    const key = displayNameToKey[displayName as keyof typeof displayNameToKey];
+    setFilterCategory(prev => prev === key ? null : key);
   };
 
   const resolveImageUrl = (imageUrl: string) => {
@@ -174,15 +167,15 @@ const Services = () => {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              {Object.values(categories).map((label) => {
-                const isSelected = selectedCategory === displayNameToKey[label];
+              {Object.entries(categories).map(([key, label]) => {
+                const isActive = filterCategory === key;
                 return (
                   <button
                     key={label}
                     type="button"
-                    className={`rounded-full border px-4 py-2 text-xs transition-all ${
-                      isSelected 
-                        ? 'border-amber-400 bg-amber-400/20 text-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.3)]' 
+                    className={`rounded-full border px-4 py-2 text-xs transition-all duration-300 ${
+                      isActive
+                        ? 'border-amber-400 bg-amber-400/20 text-white shadow-[0_0_15px_rgba(251,191,36,0.3)]'
                         : 'border-[#5b6659] bg-[#2f3a32]/70 text-[#d7d2c5] hover:bg-[#3a463a]'
                     } focus:outline-none focus:ring-2 focus:ring-amber-400`}
                     onClick={() => handleCategoryClick(label)}
@@ -202,13 +195,15 @@ const Services = () => {
                 </h3>
                 <div className="rounded-2xl border border-[#5b6659] bg-[#263027] p-4 mb-6">
                   <div className="text-xs uppercase tracking-[0.2em] text-[#cfc9bb]">Categories</div>
-                  <div className="text-3xl text-[#efece6] mt-2">{Object.keys(categories).length}</div>
+                  <div className="text-3xl text-[#efece6] mt-2">
+                    {filterCategory ? 1 : Object.keys(categories).length}
+                  </div>
                 </div>
                 <div className="rounded-2xl border border-[#5b6659] bg-[#263027] p-4 mb-6">
                   <div className="text-xs uppercase tracking-[0.2em] text-[#cfc9bb]">Total Services</div>
                   <div className="text-3xl text-[#efece6] mt-2">
-                    {selectedCategory 
-                      ? services.filter(s => s.category === selectedCategory).length 
+                    {filterCategory 
+                      ? services.filter(s => s.category === filterCategory).length 
                       : services.length}
                   </div>
                 </div>
@@ -237,9 +232,9 @@ const Services = () => {
 
               {!isLoading && !loadError && services.length > 0 &&
                 Object.entries(categories)
-                  .filter(([key]) => !selectedCategory || key === selectedCategory)
-                  .map(([category, title]) => {
-                    const categoryServices = services.filter((service) => service.category === category);
+                .filter(([key]) => !filterCategory || filterCategory === key)
+                .map(([category, title]) => {
+                  const categoryServices = services.filter((service) => service.category === category);
                   return (
                     <div
                       key={category}

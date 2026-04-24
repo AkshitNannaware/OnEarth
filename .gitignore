@@ -6,7 +6,8 @@ build/
 dist/
 
 # environment variables
-.env
+Hotel/.env
+backend/.env
 
 # logs
 npm-debug.log*

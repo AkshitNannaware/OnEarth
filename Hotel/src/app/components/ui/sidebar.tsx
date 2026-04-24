@@ -1,4 +1,4 @@
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 "use client";
 
 import * as React from "react";

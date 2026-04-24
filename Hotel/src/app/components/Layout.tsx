@@ -1,4 +1,4 @@
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import Header from './Header';

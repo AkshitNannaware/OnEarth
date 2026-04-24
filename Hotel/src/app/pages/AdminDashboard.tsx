@@ -1,4 +1,4 @@
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 const updateBookingStatus = async (
   bookingId: string,
   status: string,

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
- import API_BASE from '../../config/api';
+ import API_BASE from "@/config/api";
 
 export interface Notification {
   _id: string;

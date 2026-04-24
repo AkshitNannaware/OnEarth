@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input';
 import Footer from '../components/Footer';
 import { toast } from 'sonner';
 import type { Room } from '../types/room';
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 
 const ctaImage = '/0c0b1b9fcebeedd073f75517ee322f51.jpg';
 
@@ -116,9 +116,9 @@ const Home = () => {
 		? filteredAccommodations[(accommodationIndex + 1) % accommodationsCount]
 		: null;
 
-	const resolveRoomImage = (room: Room | null) => {
+	const resolveRoomImage = (room: Room | null): string | undefined => {
 		const imageUrl = room?.images?.[0];
-		if (!imageUrl) return null;
+		if (!imageUrl) return undefined;
 		if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) return imageUrl;
 		if (imageUrl.startsWith('/uploads/')) return `${API_BASE}${imageUrl}`;
 		if (!imageUrl.startsWith('/')) return `${API_BASE}/uploads/rooms/${imageUrl}`;
@@ -135,9 +135,9 @@ const Home = () => {
 		return `${API_BASE}/${videoUrl}`;
 	};
 	
-	const resolveServiceImage = (service: any) => {
+	const resolveServiceImage = (service: any): string | undefined => {
 		const imageUrl = String(service?.image || '').trim();
-		if (!imageUrl) return null;
+		if (!imageUrl) return undefined;
 		if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
 			return imageUrl;
 		}
@@ -451,12 +451,6 @@ const Home = () => {
 							<div className="mt-4 text-center text-[#c8cfbf]/40 text-[20px] leading-none" style={{ fontFamily: "'Great Vibes', cursive" }}>
 								Wellness &nbsp; Earth &nbsp; Sustainable
 							</div>
-
-							<div className="mt-5 flex items-center justify-center gap-2 text-white/80">
-								<div className="h-px flex-1 bg-white/70" />
-								<ArrowDown className="h-6 w-6" />
-								<div className="h-px flex-1 bg-white/70" />
-							</div>
 						</div>
 					</div>
 				</div>
@@ -518,7 +512,7 @@ const Home = () => {
 												/>
 											) : resolveServiceImage(service) ? (
 												<img
-													src={resolveServiceImage(service)}
+													src={resolveServiceImage(service) ?? undefined}
 													alt={service.name}
 													className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
 												/>
@@ -572,7 +566,7 @@ const Home = () => {
 														/>
 													) : resolveServiceImage(service) ? (
 														<img
-															src={resolveServiceImage(service)}
+															src={resolveServiceImage(service) ?? undefined}
 															alt={service.name}
 															className="w-full h-full object-cover"
 														/>
@@ -683,11 +677,11 @@ const Home = () => {
 										muted
 										loop
 										playsInline
-										poster={resolveRoomImage(prevAccommodation) || undefined}
+										poster={resolveRoomImage(prevAccommodation) ?? undefined}
 									/>
 								) : resolveRoomImage(prevAccommodation) ? (
 									<img
-										src={resolveRoomImage(prevAccommodation)}
+										src={resolveRoomImage(prevAccommodation) ?? undefined}
 										alt={prevAccommodation?.name || 'Previous room'}
 										className="h-[220px] sm:h-[300px] md:h-[360px] w-full object-cover"
 									/>
@@ -709,11 +703,11 @@ const Home = () => {
 									muted
 									loop
 									playsInline
-									poster={resolveRoomImage(activeAccommodation) || undefined}
+									poster={resolveRoomImage(activeAccommodation) ?? undefined}
 								/>
 							) : resolveRoomImage(activeAccommodation) ? (
 								<img
-									src={resolveRoomImage(activeAccommodation)}
+									src={resolveRoomImage(activeAccommodation) ?? undefined}
 									alt={activeAccommodation?.name || 'Featured room'}
 									className="h-[260px] sm:h-[340px] md:h-[420px] w-full object-cover"
 								/>
@@ -766,11 +760,11 @@ const Home = () => {
 										muted
 										loop
 										playsInline
-										poster={resolveRoomImage(nextAccommodation) || undefined}
+										poster={resolveRoomImage(nextAccommodation) ?? undefined}
 									/>
 								) : resolveRoomImage(nextAccommodation) ? (
 									<img
-										src={resolveRoomImage(nextAccommodation)}
+										src={resolveRoomImage(nextAccommodation) ?? undefined}
 										alt={nextAccommodation?.name || 'Next room'}
 										className="h-[220px] sm:h-[300px] md:h-[360px] w-full object-cover"
 									/>
@@ -856,11 +850,11 @@ const Home = () => {
 												muted
 												loop
 												playsInline
-												poster={resolveServiceImage(restaurant) || undefined}
+												poster={resolveServiceImage(restaurant) ?? undefined}
 											/>
 										) : resolveServiceImage(restaurant) ? (
 											<img
-												src={resolveServiceImage(restaurant)}
+												src={resolveServiceImage(restaurant) ?? undefined}
 												alt={restaurant.name}
 												className="h-[260px] sm:h-[320px] md:h-[380px] w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
 											/>
@@ -919,11 +913,11 @@ const Home = () => {
 														muted
 														loop
 														playsInline
-														poster={resolveServiceImage(restaurant) || undefined}
+														poster={resolveServiceImage(restaurant) ?? undefined}
 													/>
 												) : resolveServiceImage(restaurant) ? (
 													<img
-														src={resolveServiceImage(restaurant)}
+														src={resolveServiceImage(restaurant) ?? undefined}
 														alt={restaurant.name}
 														className="h-[280px] w-full object-cover"
 													/>

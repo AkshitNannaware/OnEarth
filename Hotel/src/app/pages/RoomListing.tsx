@@ -1,4 +1,4 @@
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import {

@@ -1,4 +1,4 @@
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 import React, { useEffect, useState } from 'react';
 import { BookOpen, Calendar, User } from 'lucide-react';
 import Footer from '../components/Footer';

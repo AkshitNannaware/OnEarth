@@ -1,4 +1,4 @@
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 

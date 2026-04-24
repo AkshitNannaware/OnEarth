@@ -11,8 +11,8 @@ router.use(requireDb);
 
 
 // Setup folders for uploads
-const roomImagesDir = '/var/www/onearth_uploads/rooms';
-const roomVideosDir = '/var/www/onearth_uploads/rooms/videos';
+const roomImagesDir = path.join(__dirname, '..', '..', '..', 'uploads', 'rooms');
+const roomVideosDir = path.join(__dirname, '..', '..', '..', 'uploads', 'rooms', 'videos');
 
 // Ensure folders exist (Sahi permission ke liye)
 if (!fs.existsSync(roomImagesDir)) {

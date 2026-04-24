@@ -12,8 +12,8 @@ router.use(requireDb);
 
 // 1. Setup folders for uploads
 
-const serviceImagesDir = '/var/www/onearth_uploads/services';
-const serviceVideosDir = '/var/www/onearth_uploads/services/videos';
+const serviceImagesDir = path.join(__dirname, '..', '..', '..', 'uploads', 'services');
+const serviceVideosDir = path.join(__dirname, '..', '..', '..', 'uploads', 'services', 'videos');
 
 // Ensure folders exist
 if (!fs.existsSync(serviceImagesDir)) {

@@ -1,4 +1,4 @@
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router';
 import { Clock } from 'lucide-react';
@@ -20,6 +20,7 @@ const Services = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = {
     restaurant: 'Bite Book (Restaurant)',
@@ -46,9 +47,13 @@ const Services = () => {
 
   const handleCategoryClick = (displayName: string) => {
     const key = displayNameToKey[displayName];
-    const ref = categoryRefs[key];
-    if (ref && ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (selectedCategory === key) {
+      // Toggle off if already selected
+      setSelectedCategory(null);
+    } else {
+      setSelectedCategory(key);
+      // Smooth scroll to top of content when filtering
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -169,16 +174,23 @@ const Services = () => {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              {Object.values(categories).map((label) => (
-                <button
-                  key={label}
-                  type="button"
-                  className="rounded-full border border-[#5b6659] bg-[#2f3a32]/70 px-4 py-2 text-xs text-[#d7d2c5] hover:bg-[#3a463a] focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors"
-                  onClick={() => handleCategoryClick(label)}
-                >
-                  {label}
-                </button>
-              ))}
+              {Object.values(categories).map((label) => {
+                const isSelected = selectedCategory === displayNameToKey[label];
+                return (
+                  <button
+                    key={label}
+                    type="button"
+                    className={`rounded-full border px-4 py-2 text-xs transition-all ${
+                      isSelected 
+                        ? 'border-amber-400 bg-amber-400/20 text-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.3)]' 
+                        : 'border-[#5b6659] bg-[#2f3a32]/70 text-[#d7d2c5] hover:bg-[#3a463a]'
+                    } focus:outline-none focus:ring-2 focus:ring-amber-400`}
+                    onClick={() => handleCategoryClick(label)}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -194,7 +206,11 @@ const Services = () => {
                 </div>
                 <div className="rounded-2xl border border-[#5b6659] bg-[#263027] p-4 mb-6">
                   <div className="text-xs uppercase tracking-[0.2em] text-[#cfc9bb]">Total Services</div>
-                  <div className="text-3xl text-[#efece6] mt-2">{services.length}</div>
+                  <div className="text-3xl text-[#efece6] mt-2">
+                    {selectedCategory 
+                      ? services.filter(s => s.category === selectedCategory).length 
+                      : services.length}
+                  </div>
                 </div>
                 <p className="text-sm text-[#cfc9bb]">
                   Open daily. Manage reservations from your profile at any time.
@@ -220,8 +236,10 @@ const Services = () => {
               )}
 
               {!isLoading && !loadError && services.length > 0 &&
-                Object.entries(categories).map(([category, title]) => {
-                  const categoryServices = services.filter((service) => service.category === category);
+                Object.entries(categories)
+                  .filter(([key]) => !selectedCategory || key === selectedCategory)
+                  .map(([category, title]) => {
+                    const categoryServices = services.filter((service) => service.category === category);
                   return (
                     <div
                       key={category}

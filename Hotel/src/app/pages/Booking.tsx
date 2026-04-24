@@ -1,4 +1,4 @@
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { User, Mail, Phone, CreditCard, CheckCircle2, X } from 'lucide-react';

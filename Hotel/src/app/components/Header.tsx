@@ -1,4 +1,4 @@
-import API_BASE from "../../config/api";
+import API_BASE from "@/config/api";
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router';
 import { Hotel, User, Menu, X, LogIn, LogOut, LayoutDashboard, Edit, Bell, Tag, Calendar, ClipboardList, Mail, Users } from 'lucide-react';

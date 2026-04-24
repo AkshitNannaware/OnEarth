@@ -157,8 +157,7 @@ const Footer = ({ isAdmin = false }) => {
                   ].map((item) => (
                     <Link
                       key={item.label}
-                      to="/admin"
-                      state={{ tab: item.tab }}
+                      to={item.to}
                       className="block text-sm text-[#c9c3b6] hover:text-[#efece6] transition-colors duration-200"
                     >
                       {item.label}

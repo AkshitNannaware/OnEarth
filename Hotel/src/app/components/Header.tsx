@@ -76,7 +76,7 @@ const Header = () => {
             {effectiveLogo && (
               <div className="flex items-center shrink-0">
                 <img 
-                  onClick={() => navigate('/admin', { state: { tab: 'dashboard' } })}
+                  onClick={() => navigate('/admin?tab=dashboard')}
                   src={effectiveLogo} 
                   alt="Logo" 
                   className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
@@ -118,12 +118,12 @@ const Header = () => {
             </div>
             {/* Desktop Navigation - Hidden on Mobile */}
             <div className="hidden lg:flex items-center gap-12 text-sm uppercase tracking-widest text-white/90 font-bold ml-auto">
-            <span onClick={() => navigate('/admin', { state: { tab: 'dashboard' } })} className="hover:text-white transition-colors cursor-pointer">Home</span>
-            <span onClick={() => navigate('/admin', { state: { tab: 'rooms' } })} className="hover:text-white transition-colors cursor-pointer">Manage Rooms</span>
-              <span onClick={() => navigate('/admin', { state: { tab: 'bookings' } })}>Bookings</span>
-              <span onClick={() => navigate('/admin', { state: { tab: 'services' } })}>Manage Services</span>
-              <span onClick={() => navigate('/admin', { state: { tab: 'service-bookings' } })}>Service Bookings</span>
-            <span onClick={() => navigate('/admin', { state: { tab: 'payments' } })} className="hover:text-white transition-colors cursor-pointer">Payments</span>
+            <span onClick={() => navigate('/admin?tab=dashboard')} className="hover:text-white transition-colors cursor-pointer">Home</span>
+            <span onClick={() => navigate('/admin?tab=rooms')} className="hover:text-white transition-colors cursor-pointer">Manage Rooms</span>
+              <span onClick={() => navigate('/admin?tab=bookings')} className="hover:text-white transition-colors cursor-pointer">Bookings</span>
+              <span onClick={() => navigate('/admin?tab=services')} className="hover:text-white transition-colors cursor-pointer">Manage Services</span>
+              <span onClick={() => navigate('/admin?tab=service-bookings')} className="hover:text-white transition-colors cursor-pointer">Service Bookings</span>
+            <span onClick={() => navigate('/admin?tab=payments')} className="hover:text-white transition-colors cursor-pointer">Payments</span>
               {/* Notification Bell - Desktop Only */}
             <button
                 className="relative ml-2 p-2 lg:p-0"

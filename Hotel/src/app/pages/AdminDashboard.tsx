@@ -31,7 +31,7 @@ import Footer from '../components/Footer';
 import MobileBottomNav from '../components/MobileBottomNavadmin';
 // import { useSwipeable } from 'react-swipeable';
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import {
   LayoutDashboard,
   Hotel,
@@ -199,7 +199,11 @@ const AdminDashboard = () => {
   const { user, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam) return tabParam;
+    
     if (location && location.state && location.state.tab) {
       return location.state.tab;
     }
@@ -260,6 +264,14 @@ const AdminDashboard = () => {
     
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Sync tab state with URL
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam && tabParam !== activeTab) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams, activeTab]);
   const [roomForm, setRoomForm] = useState({
     name: '',
     type: 'Single',
@@ -509,6 +521,7 @@ const AdminDashboard = () => {
 
   const handleNavSelect = (tab: string) => {
     setActiveTab(tab);
+    setSearchParams({ tab });
     if (window.innerWidth < 1024) {
       setIsSidebarOpen(false);
     }
@@ -3003,7 +3016,7 @@ const AdminDashboard = () => {
                   key={item.id}
                   onClick={() => {
                     if (item.section) {
-                      setActiveTab(item.section);
+                      handleNavSelect(item.section);
                     } else {
                       handleNavSelect(item.id);
                     }

@@ -313,7 +313,7 @@ const Home = () => {
 				<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100svh] sm:min-h-screen flex flex-col justify-end md:justify-center items-center pt-15">
 					<div className="text-center mb-auto mt-24 sm:mt-36 md:mt-52 px-3">
 						<h2 className="text-[35px] md:text-5xl lg:text-7xl text-white italic tracking-wide whitespace-nowrap pb-10 " style={{ fontFamily: "'Great Vibes', cursive" }}>
-							Experience Nature in Luxury
+							On Earth Hotel: Experience Nature in Luxury
 						</h2>
 					</div>
 

@@ -147,17 +147,18 @@ const Footer = ({ isAdmin = false }) => {
                 </h2>
                 <nav className="space-y-2">
                   {[
-                    { label: 'Dashboard', to: '/admin/dashboard' },
-                    { label: 'Manage Bookings', to: '/admin/bookings' },
-                    { label: 'Manage Rooms', to: '/admin/rooms' },
-                    { label: 'Manage Services', to: '/admin/services' },
-                    { label: 'Manage Offers', to: '/admin/offers' },
-                    { label: 'Manage Newsletters', to: '/admin/newsletters' },
-                    { label: 'Manage Contacts', to: '/admin/contacts' },
+                    { label: 'Dashboard', to: 'dashboard' },
+                    { label: 'Manage Bookings', to: 'bookings' },
+                    { label: 'Manage Rooms', to: 'rooms' },
+                    { label: 'Manage Services', to: 'services' },
+                    { label: 'Manage Offers', to: 'offers' },
+                    { label: 'Manage Newsletters', to: 'newsletters' },
+                    { label: 'Manage Contacts', to: 'contacts' },
                   ].map((item) => (
                     <Link
                       key={item.label}
-                      to={item.to}
+                      to="/admin"
+                      state={{ tab: item.tab }}
                       className="block text-sm text-[#c9c3b6] hover:text-[#efece6] transition-colors duration-200"
                     >
                       {item.label}

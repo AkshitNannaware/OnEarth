@@ -267,7 +267,9 @@ const Footer = ({ isAdmin = false }) => {
         )}
         {/* Copyright */}
         <div className={`mt-8 mb-10 pl-[-20px] pt-5 ${isAdmin ? 'border-t border-[#5b6255]' : 'border-t border-[#6c7564]'} justify-between items-center flex-col md:flex-row flex gap-6 md:gap-0`}>
-          <p className={`text-sm sm:text-base ${isAdmin ? 'text-[#c9c3b6]' : 'text-[#a9a492]'}`}>© {new Date().getFullYear()} Developed By. Alphanexis Technologies PVT.Ltd.</p>
+          <p className={`text-sm sm:text-base ${isAdmin ? 'text-[#c9c3b6]' : 'text-[#a9a492]'}`} onClick={() => window.open('https://www.alphanexis.com', '_blank')}>
+            © {new Date().getFullYear()} Developed By. Alphanexis Technologies PVT.Ltd.
+          </p>
           <div className="flex gap-3 pr-32">
             <a
               href="https://www.linkedin.com/company/alphanexis/"
